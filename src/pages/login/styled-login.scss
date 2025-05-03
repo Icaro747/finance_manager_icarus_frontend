@@ -1,0 +1,477 @@
+.login-box-main {
+  width: 100%;
+  height: 100vh;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .dialog-help {
+    z-index: 9;
+  }
+
+  .btn-tela-mine {
+    display: none;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  .box-form {
+    width: 100%;
+    min-height: calc(600px - 2rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 2rem;
+    padding-top: 1rem;
+    transition: all 1s ease-in-out;
+
+    .p-inputtext,
+    .p-password {
+      width: 100%;
+    }
+
+    .p-password {
+      input {
+        padding-right: 30px;
+      }
+      .p-icon-field {
+        width: 100%;
+
+        .p-input-icon {
+          top: 40%;
+        }
+      }
+    }
+
+    .box-center-btn {
+      display: flex;
+      justify-content: center;
+
+      button {
+        width: 50%;
+      }
+    }
+
+    .boxs-btns {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+
+      .box-btn,
+      .box-btns {
+        margin-top: 2rem;
+        width: 100%;
+        display: flex;
+        gap: 1rem;
+
+        .not-show {
+          transition: 0s;
+          opacity: 0;
+        }
+      }
+
+      .box-btn button {
+        width: calc(50% - 1rem);
+      }
+
+      .box-btns {
+        position: absolute;
+        background-color: var(--cor-4);
+        transform: translateX(calc(100% + 2rem));
+        transition: all 0.75s;
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: -25%;
+          top: 0;
+          height: 100%;
+          width: 25%;
+          background: var(--cor-4);
+          background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, var(--cor-4) 100%);
+        }
+
+        &.show {
+          z-index: 0;
+          opacity: 1;
+          transform: translateX(0%);
+        }
+
+        &.fim-cadstro {
+          transform: translateX(calc(-100% - 2rem));
+        }
+
+        button {
+          margin: auto;
+          width: calc(50% - 1rem);
+        }
+      }
+
+      button {
+        width: 50%;
+        margin: auto;
+        margin-right: 25%;
+        transition: 0.75s;
+      }
+    }
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    width: 75%;
+    min-height: 500px;
+    margin: 1rem;
+  }
+
+  .overlay-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    background-color: black;
+    background-image: url("../../assets/img/bg_login.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left;
+    background-size: cover;
+    transition: all 1s ease-in-out;
+    overflow: hidden;
+
+    &.position-2 {
+      background-position: right;
+    }
+
+    .overlay {
+      width: 200%;
+      height: 100%;
+      display: flex;
+      transition: all 1s ease-in-out;
+      transform: translateX(0%);
+      color: var(--cor-4);
+
+      .box-info {
+        width: 85%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        backdrop-filter: blur(2px);
+        border-radius: 0.75rem;
+      }
+
+      .overlay-1,
+      .overlay-2 {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: transform 1s ease-in-out;
+      }
+    }
+  }
+
+  .btn-login {
+    position: relative;
+    width: 250px;
+    height: 50px;
+    border-radius: 30px;
+    border: none;
+    background-color: #7f7f7f24;
+    --cor-efito: #06b6d4;
+    --max-size-efito: 80%;
+    --min-size-efito: 30px;
+
+    &:hover {
+      &::after {
+        top: 0;
+        height: 50%;
+        width: var(--max-size-efito);
+        border-radius: 30px 30px 0 0;
+      }
+
+      &::before {
+        bottom: 0;
+        height: 50%;
+        width: var(--max-size-efito);
+        border-radius: 0 0 30px 30px;
+      }
+    }
+
+    &::before,
+    &::after {
+      background: var(--cor-efito);
+      box-shadow:
+        0 0 5px var(--cor-efito),
+        0 0 15px var(--cor-efito),
+        0 0 30px var(--cor-efito),
+        0 0 60px var(--cor-efito);
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translatex(-50%);
+      bottom: -5px;
+      width: var(--min-size-efito);
+      height: 10px;
+      border-radius: 10px;
+      transition: 0.5s;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translatex(-50%);
+      top: -5px;
+      width: var(--min-size-efito);
+      height: 10px;
+      border-radius: 10px;
+      transition: 0.5s;
+    }
+
+    span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 10px;
+      letter-spacing: 1px;
+      text-decoration: none;
+      overflow: hidden;
+      color: var(--cor-4);
+      font-weight: 400;
+      z-index: 1;
+      transition: 0.5s;
+      backdrop-filter: blur(15px);
+    }
+  }
+
+  .form-login {
+    &.mais-50 {
+      transform: translateX(50%);
+    }
+    &.menos-50 {
+      transform: translateX(-50%);
+    }
+    &.zero {
+      transform: translateX(0%);
+    }
+
+    &.cadastro,
+    &.login {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    &.cadastro {
+      overflow: hidden;
+
+      .box-etapas {
+        display: flex;
+        gap: 2rem;
+        width: calc(400% + 6rem);
+
+        .etapa-1,
+        .etapa-2,
+        .etapa-3,
+        .etapa-4 {
+          width: 25%;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          top: 0;
+          transition: all 0.75s;
+          transform: translateX(0%);
+          opacity: 0;
+
+          &.show {
+            transform: translateX(calc(-100% + -2rem));
+            opacity: 1;
+          }
+        }
+
+        .etapa-1 {
+          transform: translateX(calc(-100% + -2rem));
+
+          &.show {
+            transform: translateX(0%);
+          }
+        }
+
+        .etapa-2 {
+          &.show {
+            & ~ .etapa-3 {
+              transform: translateX(calc(-100% + -2rem));
+            }
+          }
+          &.fim-cadstro {
+            transform: translateX(calc(-200% + -4rem));
+          }
+        }
+
+        .etapa-3 {
+          &.show {
+            transform: translateX(calc(-200% + -4rem));
+            & ~ .etapa-4 {
+              transform: translateX(calc(-200% + -4rem));
+            }
+          }
+          &.fim-cadstro {
+            transform: translateX(calc(-300% + -6rem));
+          }
+        }
+
+        .etapa-4 {
+          div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.75s;
+            height: 50%;
+          }
+          &.show {
+            transform: translateX(calc(-300% + -6rem));
+            div {
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    label {
+      padding-left: 5px;
+      font-size: 1rem;
+    }
+    input {
+      font-size: 14px;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .login-box-main {
+    .card {
+      width: 90%;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .login-box-main {
+    .card {
+      width: 100%;
+      height: 100vh;
+      margin: 0rem;
+      border-radius: 0;
+      padding-top: 0 !important;
+    }
+
+    .btn-tela-mine {
+      display: block;
+    }
+
+    form {
+      .box-center-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .boxs-btns .box-btn {
+        justify-content: center;
+
+        button {
+          margin: 0;
+          width: auto;
+          max-width: 45%;
+          min-width: 25%;
+        }
+      }
+    }
+
+    .row {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow: hidden;
+
+      &.g-5 {
+        --bs-gutter-y: 0;
+      }
+
+      .overlay-container {
+        display: none;
+      }
+
+      .overflow-hidden {
+        width: 100%;
+        height: 100vh;
+        margin-top: 0;
+        transition: all 0.5s;
+
+        &.menos-100 {
+          transform: translateX(-100%);
+        }
+        &.zero {
+          transform: translateX(0%);
+        }
+
+        .box-form {
+          height: 100%;
+
+          .form-login {
+            padding: 0;
+
+            &.mais-50,
+            &.menos-50,
+            &.zero {
+              transform: translateX(0%);
+            }
+
+            &.cadastro {
+              .box-etapas {
+                width: calc(400% + 4rem);
+                .etapa-1,
+                .etapa-2 {
+                  width: calc(100vw - 10px);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .overlay-container {
+      display: none;
+    }
+  }
+}

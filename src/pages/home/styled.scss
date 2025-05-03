@@ -1,0 +1,146 @@
+.home-grid {
+  --espasamento: 10px;
+  display: grid;
+  grid-template-columns: calc(50% - (var(--espasamento) / 2)) calc(50% - (var(--espasamento) / 2));
+  grid-template-areas:
+    "tarefas hoje"
+    "notificacao notificacao";
+  gap: var(--espasamento);
+
+  &.not-info {
+    grid-template-areas:
+      "tarefas tarefas"
+      "hoje notificacao";
+  }
+
+  .item-u-base {
+    grid-area: u-base;
+  }
+  .item-recentes {
+    grid-area: recentes;
+  }
+  .item-titulo-atividades {
+    grid-area: titulo-atividades;
+  }
+  .item-tarefas {
+    grid-area: tarefas;
+  }
+  .item-info {
+    grid-area: info;
+  }
+  .item-hoje {
+    grid-area: hoje;
+  }
+  .item-notificacao {
+    grid-area: notificacao;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-grid,
+  .home-grid.not-info {
+    --espasamento: 1rem;
+    grid-template-areas:
+      "u-base u-base"
+      "recentes recentes"
+      "titulo-atividades titulo-atividades"
+      "tarefas tarefas"
+      "info info"
+      "hoje hoje"
+      "notificacao notificacao";
+  }
+}
+
+.home {
+  .btn {
+    border-color: var(--cor-4);
+    color: var(--cor-4);
+
+    &:hover {
+      border-color: var(--cor-4);
+      background-color: var(--cor-4);
+      color: rgb(75, 85, 99);
+    }
+  }
+
+  .icon {
+    display: flex;
+    padding: 0.5rem;
+    justify-content: center;
+    align-content: center;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+  }
+
+  h1,
+  h2 {
+    // color: var(--cor-4);
+    margin: 2rem 0;
+  }
+
+  h2 {
+    margin: 0;
+  }
+
+  .box-titulo {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid white;
+
+    i {
+      font-size: 18px;
+      color: var(--cor-4);
+    }
+
+    &.notificacao,
+    &.pendentes,
+    &.calenderio {
+      justify-content: space-between;
+      div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+      }
+    }
+  }
+
+  .card {
+    // background-color: rgba(243, 243, 243, 0.1);
+    backdrop-filter: blur(50px);
+
+    &.sub-lista {
+      table tbody tr {
+        background-color: rgba(243, 243, 243, 0.25);
+        //color: var(--cor-4);
+        transition: all 0.3s;
+
+        &:hover {
+          background-color: var(--cor-4);
+          color: rgb(75, 85, 99);
+        }
+        &.p-highlight {
+          background-color: var(--cor-4);
+          color: rgb(75, 85, 99);
+        }
+      }
+    }
+
+    table thead th {
+      background-color: #8a8d8e;
+      color: var(--cor-4);
+      --radius: 10px;
+      &:first-child {
+        border-top-left-radius: var(--radius);
+      }
+      &:last-child {
+        border-top-right-radius: var(--radius);
+      }
+    }
+  }
+}

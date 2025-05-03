@@ -1,0 +1,46 @@
+:root {
+  --font-family-1: 'Aeonik', sans-serif;
+  --font-family-2: "Montserrat", serif;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('../fonts/aeoniktrial-regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('../fonts/aeoniktrial-regularitalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('../fonts/aeoniktrial-light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('../fonts/aeoniktrial-lightitalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('../fonts/aeoniktrial-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('../fonts/aeoniktrial-bolditalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}

@@ -1,0 +1,203 @@
+.ak {
+  --icon-cor: var(--cor-4);
+  --svg: "";
+  --ak-icon: 1.4em;
+  min-width: var(--ak-icon);
+  height: var(--ak-icon);
+  margin: -0.2em;
+  display: inline-block;
+  background-color: var(--icon-cor);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-image: var(--svg);
+  -webkit-mask-image: var(--svg);
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+
+  &.p-input-icon {
+    --ak-icon: 1.6em;
+    top: 9px;
+    background-color: var(--cor-preto-2);
+  }
+  &.p-button-icon-right {
+    margin-left: 0.5rem;
+  }
+  &.p-button-icon-left {
+    margin-right: 0.5rem;
+  }
+  &.fs-7 {
+    font-size: 0.75rem !important;
+  }
+  &.fs-8 {
+    font-size: 0.5rem !important;
+  }
+}
+
+.ak-grid-four-fill {
+  --svg: url("../svgs/grid-four-fill.svg");
+}
+
+.ak-rows-fill {
+  --svg: url("../svgs/rows-fill.svg");
+}
+
+.ak-plus-circle {
+  --svg: url("../svgs/plus-circle.svg");
+}
+
+.ak-magnifying-glass {
+  --svg: url("../svgs/magnifying-glass.svg");
+}
+
+.ak-bell {
+  --svg: url("../svgs/bell.svg");
+}
+
+.ak-edit {
+  --svg: url("../svgs/edit.svg");
+}
+
+.ak-trash {
+  --svg: url("../svgs/trash.svg");
+}
+
+.ak-times-circle {
+  --svg: url("../svgs/times-circle.svg");
+}
+
+.ak-info-circle {
+  --svg: url("../svgs/info-circle.svg");
+}
+
+.ak-processo {
+  --svg: url("../svgs/processo.svg");
+}
+
+.ak-clock {
+  --svg: url("../svgs/clock.svg");
+}
+
+.ak-folder {
+  --svg: url("../svgs/folder.svg");
+}
+
+.ak-ia {
+  --svg: url("../svgs/ia.svg");
+}
+
+.ak-folder-file {
+  --svg: url("../svgs/folder-file.svg");
+}
+
+.ak-magnifying-glass-plus {
+  --svg: url("../svgs/magnifying-glass-plus.svg");
+}
+
+.ak-chats-fill {
+  --svg: url("../svgs/chats-fill.svg");
+}
+
+.ak-file {
+  --svg: url("../svgs/file.svg");
+}
+
+.ak-shield-fill {
+  --svg: url("../svgs/shield-fill.svg");
+}
+
+.ak-circles-six-fill {
+  --svg: url("../svgs/circles-six-fill.svg");
+}
+
+.ak-calendar {
+  --svg: url("../svgs/calendar.svg");
+}
+
+.ak-home {
+  --svg: url("../svgs/home.svg");
+}
+
+.ak-tarefas {
+  --svg: url("../svgs/tarefas.svg");
+}
+
+.ak-lightbulb-fill {
+  --svg: url("../svgs/lightbulb-fill.svg");
+}
+.ak-head-circuit-fill {
+  --svg: url("../svgs/head-circuit-fill.svg");
+}
+
+.ak-headset {
+  --svg: url("../svgs/headset.svg");
+}
+
+.ak-gear-six {
+  --svg: url("../svgs/gear-six.svg");
+}
+
+.ak-chats-plus {
+  --svg: url("../svgs/chats-plus.svg");
+}
+
+.ak-info-box {
+  --svg: url("../svgs/info-box.svg");
+}
+
+.ak-arrow-down {
+  --svg: url("../svgs/arrow-down.svg");
+}
+
+.ak-arrow-up {
+  --svg: url("../svgs/arrow-up.svg");
+}
+
+.ak-arroba {
+  --svg: url("../svgs/arroba.svg");
+}
+
+.ak-file-down {
+  --svg: url("../svgs/file-down.svg");
+}
+
+.ak-database {
+  --svg: url("../svgs/database.svg");
+}
+
+.ak-check-circle {
+  --svg: url("../svgs/check-circle.svg");
+}
+
+.ak-doc-inclined {
+  --svg: url("../svgs/doc-inclined.svg");
+}
+
+.ak-spinner-gap {
+  --svg: url("../svgs/spinner-gap.svg");
+}
+
+.ak-cloud-arrow-up {
+  --svg: url("../svgs/cloud-arrow-up.svg");
+}
+
+.ak-file-magnifying-glass {
+  --svg: url("../svgs/file-magnifying-glass.svg");
+}
+
+.ak-file-excel {
+  --svg: url("../svgs/file-excel.svg");
+}
+
+.ak-file-pdf {
+  --svg: url("../svgs/file-pdf.svg");
+}
+
+.ak-user {
+  --svg: url("../svgs/user.svg");
+}
+
+.ak-monetary {
+  --svg: url("../svgs/monetary.svg");
+}

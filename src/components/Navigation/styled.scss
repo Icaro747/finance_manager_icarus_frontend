@@ -1,0 +1,258 @@
+.layout-container {
+  display: flex;
+  height: 100vh;
+}
+
+.layout-sidebar {
+  --size-sidebar: 240px;
+  width: var(--size-sidebar);
+  min-width: var(--size-sidebar);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  background-color: #ffffff;
+  transition: 0.5s;
+  overflow: hidden;
+
+  &.not-show {
+    width: 75px;
+    min-width: 75px;
+
+    .p-button {
+      .p-button-label {
+        opacity: 0;
+      }
+      .p-button-icon-left {
+        margin-right: 0rem;
+        margin-left: 1px;
+      }
+    }
+  }
+
+  .p-button {
+    .p-button-label {
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .p-button-icon-left {
+      margin-left: 0px;
+      transition: all 0.3s;
+    }
+  }
+}
+
+.text-logo {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--cor-4);
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  transition: all 0.3s;
+}
+
+.layout-logo {
+  position: absolute;
+  width: 105px;
+  transition: 0.5s;
+  z-index: 1;
+}
+
+.layout-logo-tech {
+  position: absolute;
+  transition: 0.5s;
+  z-index: 1;
+}
+
+.layout-box-logo {
+  height: 70px;
+  text-align: center;
+  transition: all 0.5s;
+  position: relative;
+  overflow: hidden;
+  background-color: #35353c;
+  background-position: left;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  &.layout-logo-min,
+  &.layout-logo-max {
+    .btn-close-menu {
+      display: none;
+      border-color: var(--cor-4);
+      color: var(--cor-4);
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translate(0%, -50%);
+    }
+  }
+
+  &.layout-logo-max {
+    .layout-logo {
+      top: 0px;
+      left: 40%;
+      transform: translate(-60%, 0%);
+    }
+
+    .layout-logo-tech {
+      top: 55%;
+      left: 60%;
+      transform: translate(-40%, -45%);
+    }
+
+    .text-logo {
+      opacity: 1;
+    }
+  }
+
+  &.layout-logo-min {
+    background-position: center;
+
+    .layout-logo {
+      width: 77px;
+      top: 10%;
+      left: 0px;
+      transform: translate(0%, -10%);
+    }
+
+    .layout-logo-tech {
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -30%);
+    }
+
+    .text-logo {
+      opacity: 0;
+    }
+  }
+
+  .text-nome {
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+
+  .layout-box-logo-min {
+    font-size: 10px;
+    left: 70%;
+  }
+}
+
+.layout-sidebar.not-show .layout-menu {
+  padding-left: 18px;
+}
+
+.layout-menu {
+  --cor-text-menu: #101010;
+  padding: 0 10px;
+  padding-top: 10px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: var(--size-sidebar);
+  transition: 0.5s;
+
+  &.sticky {
+    position: fixed;
+  }
+
+  .p-panelmenu-panel {
+    margin-bottom: 8px;
+  }
+
+  .item-menu {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.5rem;
+    margin-left: 0px;
+    transition: 0.5s;
+    padding: 0 10px;
+    min-height: 33px;
+    color: var(--cor-text-menu);
+
+    &.not-show {
+      margin-left: 8px;
+    }
+
+    i {
+      font-size: 18px;
+      --ak-icon: 1em;
+      --icon-cor: var(--cor-text-menu);
+    }
+
+    p {
+      opacity: 0;
+      transition: 0.5s;
+      color: var(--cor-text-menu);
+    }
+
+    .show-text {
+      opacity: 1;
+    }
+  }
+
+  .p-menuitem-content {
+    a {
+      color: var(--cor-text-menu);
+    }
+  }
+
+  .p-panelmenu-panel .p-highlight .p-panelmenu-header-content {
+    background-color: #94949426;
+  }
+  .p-panelmenu-panel .p-panelmenu-header-content:hover {
+    background-color: #94949426;
+  }
+}
+
+.div-separator {
+  height: 1px;
+  background-color: #ccc;
+  margin: 15px 0 10px 0;
+}
+
+.layout-box-menus {
+  display: flex;
+  transition: 0.5s;
+
+  ul {
+    padding: 10px 0;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .layout-box-logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .layout-logo {
+      max-width: 200px;
+    }
+
+    &.layout-logo-min,
+    &.layout-logo-max {
+      .btn-close-menu {
+        display: flex;
+      }
+    }
+  }
+
+  .layout-sidebar {
+    --size-sidebar: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    height: 100vh;
+
+    &.not-show {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,232 @@
+:root {
+  --cor-1: #0068ff;
+  --cor-2: #070707;
+  --cor-3: #f3f3f3;
+  --cor-4: #fff;
+  --cor-azul-1: #0085ff;
+  --cor-azul-2: #2b95f7;
+  --cor-cinza-1: #f2f2f2;
+  --cor-cinza-2: #e2e2e2;
+  --cor-cinza-5: #d3d3d3;
+  --cor-cinza-3: #c3c3c3;
+  --cor-cinza-4: #757575;
+  --cor-preto-1: #383838;
+  --cor-preto-2: #3a3a3a;
+  --cor-preto-3: #3f3f3f;
+  --cor-laranja-1: #ffa733;
+  --cor-amarelo-1: #ffce00;
+  --cor-vermelho-1: #ff0000;
+  --cor-verde-1: #26d58c;
+}
+
+.ak.ak-cor-cinza-4 {
+  --icon-cor: var(--cor-cinza-4) !important;
+}
+
+.ak.ak-cor-2 {
+  --icon-cor: var(--cor-2) !important;
+}
+
+.ak.ak-amarelo {
+  --icon-cor: var(--cor-amarelo-1) !important;
+}
+
+.ak.ak-cor-verde {
+  --icon-cor: var(--cor-verde-1) !important;
+}
+
+.ak.ak-cor-vermelho {
+  --icon-cor: var(--cor-vermelho-1) !important;
+}
+
+.border-cor-cinza {
+  border-color: var(--cor-cinza-3) !important;
+}
+
+.border-cor-branca {
+  border-color: var(--cor-4) !important;
+}
+
+.border-cor-azul {
+  border-color: var(--cor-azul-1) !important;
+}
+
+.border-cor-verde {
+  border-color: var(--cor-verde-1) !important;
+}
+
+.border-cor-vermelho {
+  border-color: var(--cor-vermelho-1) !important;
+}
+
+.border-cor-laranja {
+  border-color: var(--cor-laranja-1) !important;
+}
+
+.bg-cor-azul {
+  background-color: var(--cor-azul-1) !important;
+}
+
+.bg-cor-verde {
+  background-color: var(--cor-verde-1) !important;
+}
+
+.bg-cor-vermelho {
+  background-color: var(--cor-vermelho-1) !important;
+}
+
+.bg-cor-laranja {
+  background-color: var(--cor-laranja-1) !important;
+}
+
+.bg-cor-branca {
+  background-color: var(--cor-4) !important;
+}
+
+.bg-cor-cinza-1 {
+  background-color: var(--cor-cinza-1) !important;
+}
+
+.bg-cor-cinza-2 {
+  background-color: var(--cor-cinza-2) !important;
+}
+
+.bg-cor-cinza-3 {
+  background-color: var(--cor-cinza-3) !important;
+}
+
+.bg-cor-cinza-4 {
+  background-color: var(--cor-cinza-4) !important;
+}
+
+.bg-cor-cinza-5 {
+  background-color: var(--cor-cinza-5) !important;
+}
+
+.bg-cor-preto-1 {
+  background-color: var(--cor-preto-1) !important;
+}
+
+.bg-cor-preto-2 {
+  background-color: var(--cor-preto-2) !important;
+}
+
+.text-cor-1 {
+  color: #707070 !important;
+}
+
+.text-cor-2 {
+  color: var(--cor-preto-1) !important;
+}
+
+.text-cor-3 {
+  color: var(--cor-preto-2) !important;
+}
+
+.text-cor-4 {
+  color: var(--cor-4) !important;
+}
+
+.status-border-pendente {
+  border-color: #D3D3D3 !important;
+}
+
+.status-border-agendada {
+  border-color: #2196F3 !important;
+}
+
+.status-border-realizada {
+  border-color: #4CAF50 !important;
+}
+
+.status-border-remarcada {
+  border-color: #FF9800 !important;
+}
+
+.status-border-cancelada {
+  border-color: #F44336 !important;
+}
+
+.status-border-suspensa {
+  border-color: #FFEB3B !important;
+}
+
+.status-border-encerrada {
+  border-color: #607D8B !important;
+}
+
+.status-border-aguardando-decisao {
+  border-color: #9C27B0 !important;
+}
+
+.status-border-acordo-realizado {
+  border-color: #8BC34A !important;
+}
+
+.status-border-sem-acordo {
+  border-color: #B71C1C !important;
+}
+
+.status-border-ausencia-reclamante {
+  border-color: #FF5722 !important;
+}
+
+.status-border-ausencia-reclamado {
+  border-color: #FF5722 !important;
+}
+
+.status-border-conduzida-preposto {
+  border-color: #03A9F4 !important;
+}
+
+.status-bgc-pendente {
+  background-color: #D3D3D3 !important;
+}
+
+.status-bgc-agendada {
+  background-color: #2196F3 !important;
+}
+
+.status-bgc-realizada {
+  background-color: #4CAF50 !important;
+}
+
+.status-bgc-remarcada {
+  background-color: #FF9800 !important;
+}
+
+.status-bgc-cancelada {
+  background-color: #F44336 !important;
+}
+
+.status-bgc-suspensa {
+  background-color: #FFEB3B !important;
+}
+
+.status-bgc-encerrada {
+  background-color: #607D8B !important;
+}
+
+.status-bgc-aguardando-decisao {
+  background-color: #9C27B0 !important;
+}
+
+.status-bgc-acordo-realizado {
+  background-color: #8BC34A !important;
+}
+
+.status-bgc-sem-acordo {
+  background-color: #B71C1C !important;
+}
+
+.status-bgc-ausencia-reclamante {
+  background-color: #FF5722 !important;
+}
+
+.status-bgc-ausencia-reclamado {
+  background-color: #FF5722 !important;
+}
+
+.status-bgc-conduzida-preposto {
+  background-color: #03A9F4 !important;
+}
