@@ -123,6 +123,7 @@ const Chart = () => {
             index={index}
             isEditar
             onChange={onChangeJsonData}
+            title={item.title}
             descricao={item.descricao}
             isCard
             itemsCenter
@@ -145,11 +146,40 @@ const Chart = () => {
     const Go = async () => {
       try {
         setLoading(true);
-        const data = await Requisicao.Get({
+        const linha = await Requisicao.Get({
           endpoint: "/Grafico/Linha/ByRangeData",
           params: {
             date1: new Date(dates[0]).toISOString(),
             date2: new Date(dates[1]).toISOString()
+          },
+          config: Auth.GetHeaders()
+        });
+
+        const pizza0 = await Requisicao.Get({
+          endpoint: "/Grafico/Pizza/ByRangeData",
+          params: {
+            date1: new Date(dates[0]).toISOString(),
+            date2: new Date(dates[1]).toISOString()
+          },
+          config: Auth.GetHeaders()
+        });
+
+        const pizza1 = await Requisicao.Get({
+          endpoint: "/Grafico/Pizza/ByRangeDataAndByTipoGasto",
+          params: {
+            date1: new Date(dates[0]).toISOString(),
+            date2: new Date(dates[1]).toISOString(),
+            tipo: "cartao"
+          },
+          config: Auth.GetHeaders()
+        });
+
+        const pizza2 = await Requisicao.Get({
+          endpoint: "/Grafico/Pizza/ByRangeDataAndByTipoGasto",
+          params: {
+            date1: new Date(dates[0]).toISOString(),
+            date2: new Date(dates[1]).toISOString(),
+            tipo: "corrente"
           },
           config: Auth.GetHeaders()
         });
@@ -163,9 +193,41 @@ const Chart = () => {
             sizeLg: null,
             sizeXl: null,
             type: "grafico",
-            descricao:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-            chartData: data
+            title: "Linha de tempo de gatos",
+            chartData: linha
+          },
+          {
+            index: 1,
+            size: 4,
+            sizeSm: null,
+            sizeMd: null,
+            sizeLg: null,
+            sizeXl: null,
+            type: "grafico",
+            title: "Todos os gastos",
+            chartData: pizza0
+          },
+          {
+            index: 2,
+            size: 4,
+            sizeSm: null,
+            sizeMd: null,
+            sizeLg: null,
+            sizeXl: null,
+            type: "grafico",
+            title: "Gastos com cartão",
+            chartData: pizza1
+          },
+          {
+            index: 3,
+            size: 4,
+            sizeSm: null,
+            sizeMd: null,
+            sizeLg: null,
+            sizeXl: null,
+            type: "grafico",
+            title: "Gastos na conta corrente",
+            chartData: pizza2
           }
         ];
         setJsonData(new Map(thesJson.map((item) => [item.index, item])));
@@ -193,7 +255,33 @@ const Chart = () => {
             locale="pt-br"
             dateFormat="dd/mm/yy"
           />
-          <Button icon="ak ak-clock" className="btn-quadro active" />
+          <Button
+            icon="ak ak-clock"
+            className="btn-quadro active"
+            onClick={() => {
+              function getDateRange() {
+                const today = new Date();
+
+                // Primeiro dia do mês passado
+                const firstDayLastMonth = new Date(
+                  today.getFullYear(),
+                  today.getMonth() - 1,
+                  1
+                );
+
+                // Último dia do mês atual
+                const lastDayThisMonth = new Date(
+                  today.getFullYear(),
+                  today.getMonth() + 1,
+                  0
+                );
+
+                return [firstDayLastMonth, lastDayThisMonth];
+              }
+
+              setDates(getDateRange());
+            }}
+          />
         </div>
       </Col>
       {Show && ShowItem()}

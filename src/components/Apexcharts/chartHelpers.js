@@ -2,8 +2,7 @@ export function ConstruirGraficoLinha(data) {
   return {
     type: 'line',
     chart: { id: 'line-chart', type: 'line' },
-    xaxis: { categories: data.labels },
-    legend: { show: false }
+    xaxis: { categories: data.labels, tickAmount: 7, },
   };
 }
 

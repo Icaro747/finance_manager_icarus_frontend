@@ -13,9 +13,9 @@ import { OverlayPanel } from "primereact/overlaypanel";
 import "./styled.scss";
 
 const Row = ({ children }) => (
-  <div id="imprecao" className="row g-3">
+  <section id="imprecao" className="row g-3">
     {children}
-  </div>
+  </section>
 );
 
 Row.propTypes = {
@@ -27,6 +27,7 @@ const Col = ({
   index,
   isEditar,
   onChange,
+  title,
   descricao,
   isCard,
   itemsCenter,
@@ -102,10 +103,10 @@ const Col = ({
   }, [MaisOpcoes]);
 
   return (
-    <div className={GetSize()}>
+    <article className={GetSize()}>
       <div className={`${isCard ? "card p-3 " : ""}h-100`}>
         {(descricao || isEditar) && (
-          <div className="w-100 d-flex justify-content-between mb-3">
+          <div className="w-100 d-flex justify-content-between align-items-center mb-3">
             {descricao ? (
               <>
                 <Button
@@ -126,6 +127,7 @@ const Col = ({
             ) : (
               <div />
             )}
+            {title && <h3 className="m-0">{title}</h3>}
             {isEditar && (
               <>
                 <Button
@@ -287,7 +289,7 @@ const Col = ({
           {children}
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
@@ -303,6 +305,7 @@ Col.propTypes = {
   index: PropTypes.number,
   isEditar: PropTypes.bool,
   onChange: PropTypes.func,
+  title: PropTypes.string,
   descricao: PropTypes.string,
   isCard: PropTypes.bool,
   itemsCenter: PropTypes.bool,

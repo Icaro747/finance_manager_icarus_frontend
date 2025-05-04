@@ -50,8 +50,16 @@ const ModalNewBase = ({ Show, setShow }) => {
   };
 
   // Função para transformar o valor em número
-  const FormatValue = (value) =>
-    Number(value.replace("R$", "").replace(".", "").replace(",", "."));
+  const FormatValue = (value) => {
+    const fv = Number(
+      value.replace("R$", "").replace(".", "").replace(",", ".")
+    );
+
+    if (fv < 0) {
+      return fv * -1;
+    }
+    return fv;
+  };
 
   const HandleFileUpload = (event) => {
     const file = event.files[0];
@@ -121,7 +129,7 @@ const ModalNewBase = ({ Show, setShow }) => {
           data: {
             data: item.data,
             valor: item.valor,
-            descricao: item.nomeMovimentacao,
+            descricao: null,
             entrada: false,
             cartao_Id: Tipo === "Cartão" ? Link : null,
             banco_Id: Tipo === "Conta corrente" ? Link : null,

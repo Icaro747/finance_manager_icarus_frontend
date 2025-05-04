@@ -44,7 +44,6 @@ const Apexcharts = React.memo(({ data }) => {
     () => construirOpcoesGrafico(data),
     [construirOpcoesGrafico, data]
   );
-  console.log("🚀 ~ Apexcharts ~ OpcoesGraficas:", OpcoesGraficas);
 
   // Construção das séries de dados do gráfico
   const SeriesDados = useMemo(
@@ -63,7 +62,7 @@ const Apexcharts = React.memo(({ data }) => {
           options={OpcoesGraficas}
           series={SeriesDados}
           type={OpcoesGraficas.type}
-          height={300}
+          height={400}
         />
       )}
     </div>

@@ -1,4 +1,3 @@
-// constants/navigation.js
 const ItensNavigation = [
   {
     id: 'home',
@@ -28,7 +27,25 @@ const ItensNavigation = [
         to: '/app/conta/banco',
         label: 'Banco',
         icon: 'pi pi-bars',
-        accessLevelAllowed: [0, 1],
+      },
+    ]
+  },
+  {
+    id: "gereciamento",
+    label: "Gereciamento",
+    icon: 'ak ak-gear-six',
+    items: [
+      {
+        id: 'movimentacao',
+        to: '/app/gereciamento/movimentacao',
+        label: 'Movimentaçoes',
+        icon: 'pi pi-bars',
+      },
+      {
+        id: 'nome-movimentacao',
+        to: '/app/gereciamento/movimentacao/nome',
+        label: 'Nomes Movimentaçoes',
+        icon: 'pi pi-bars',
       },
     ]
   },

@@ -146,7 +146,7 @@ const RenderHeader = ({
   notShowExcluir
 }) => (
   <div style={LayoutLista ? GetStyleWidth(headerWidth) : {}}>
-    <div className="d-flex flex-row flex-wrap justify-content-between gap-3">
+    <div className="d-flex flex-row justify-content-between gap-3">
       {HeaderComponent}
       {!LayoutLista && (
         <BtnsCard

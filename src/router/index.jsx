@@ -13,11 +13,13 @@ import LoadingScreen from "./modules/LoadingScreen";
 import PrivateRoute from "./modules/PrivateRoute";
 
 // #region imports de paginas
-const Home = lazy(() => import("pages/home/index"));
-const Login = lazy(() => import("pages/login"));
-const BasesImportadas = lazy(() => import("pages/basesImportadas"));
-const ListaBanco = lazy(() => import("pages/listaBanco"));
 const Chats = lazy(() => import("pages/chart"));
+const Login = lazy(() => import("pages/login"));
+const Home = lazy(() => import("pages/home/index"));
+const ListaBanco = lazy(() => import("pages/listaBanco"));
+const BasesImportadas = lazy(() => import("pages/basesImportadas"));
+const ListaMovimentacao = lazy(() => import("pages/listaMovimentacao"));
+const ListaNomeMovimentacao = lazy(() => import("pages/listaNomeMovimentacao"));
 // #endregion
 
 // #region imports de paginas de teste
@@ -100,6 +102,30 @@ const MainRouter = () => {
                 <Chats />
               </Suspense>
             )
+          },
+          // #endregion
+
+          // #region gereciamento
+          {
+            path: "gereciamento",
+            children: [
+              {
+                path: "movimentacao",
+                element: (
+                  <Suspense fallback={<LoadingScreen />}>
+                    <ListaMovimentacao />
+                  </Suspense>
+                )
+              },
+              {
+                path: "movimentacao/nome",
+                element: (
+                  <Suspense fallback={<LoadingScreen />}>
+                    <ListaNomeMovimentacao />
+                  </Suspense>
+                )
+              }
+            ]
           }
           // #endregion
         ]

@@ -99,7 +99,6 @@ export const GetTemplateComponent = (templateName) => {
  * @returns {Array} Itens processados e filtrados
  */
 export const ProcessNavigationItems = (items, userAccessLevel, depth = 0) => {
-  console.log("🚀 ~ ProcessNavigationItems ~ items:", items);
   if (!items || !Array.isArray(items)) return [];
   if (userAccessLevel === null || userAccessLevel === undefined) return [];
 
@@ -118,7 +117,6 @@ export const ProcessNavigationItems = (items, userAccessLevel, depth = 0) => {
             depth + 1
           )
         : undefined;
-      console.log("🚀 ~ .map ~ processedItems:", processedItems);
 
       // Retorna o item com template e itens processados
       return {
