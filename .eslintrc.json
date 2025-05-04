@@ -44,7 +44,8 @@
           [
             "/^prop-types/",
             "/^date-fns/",
-            "/^classnames/"
+            "/^classnames/",
+            "/^papaparse/"
           ],
           "/primereact/",
           "/constants/",

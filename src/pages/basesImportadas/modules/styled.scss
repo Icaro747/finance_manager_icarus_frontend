@@ -1,0 +1,11 @@
+.box-doc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+
+  img {
+    width: 32px;
+    margin-bottom: 10px;
+  }
+}

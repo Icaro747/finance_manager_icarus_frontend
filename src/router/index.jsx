@@ -15,7 +15,9 @@ import PrivateRoute from "./modules/PrivateRoute";
 // #region imports de paginas
 const Home = lazy(() => import("pages/home/index"));
 const Login = lazy(() => import("pages/login"));
-const PrimeiroAcesso = lazy(() => import("pages/home/PrimeiroAcesso"));
+const BasesImportadas = lazy(() => import("pages/basesImportadas"));
+const ListaBanco = lazy(() => import("pages/listaBanco"));
+const Chats = lazy(() => import("pages/chart"));
 // #endregion
 
 // #region imports de paginas de teste
@@ -57,15 +59,45 @@ const MainRouter = () => {
             index: true,
             element: (
               <Suspense fallback={<LoadingScreen />}>
-                <PrimeiroAcesso />
+                <Home />
               </Suspense>
             )
           },
+          // #endregion
+
+          // #region bases
           {
-            path: "home",
+            path: "base",
             element: (
               <Suspense fallback={<LoadingScreen />}>
-                <Home />
+                <BasesImportadas />
+              </Suspense>
+            )
+          },
+          // #endregion
+
+          // #region contas
+          {
+            path: "conta",
+            children: [
+              {
+                path: "banco",
+                element: (
+                  <Suspense fallback={<LoadingScreen />}>
+                    <ListaBanco />
+                  </Suspense>
+                )
+              }
+            ]
+          },
+          // #endregion
+
+          // #region graficos
+          {
+            path: "graficos",
+            element: (
+              <Suspense fallback={<LoadingScreen />}>
+                <Chats />
               </Suspense>
             )
           }

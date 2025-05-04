@@ -35,7 +35,7 @@ const FormLogin = ({ IsLogin, toastRef, IsCadastre, IsRecuperaSenha }) => {
         }
       });
 
-      navigate("/app/home");
+      navigate("/app");
       auth.login(resposta);
     } catch (error) {
       if (error?.message === "Network Error") {

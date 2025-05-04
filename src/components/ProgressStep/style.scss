@@ -1,0 +1,82 @@
+.box-progress {
+  width: 100%;
+  height: 3px;
+  background-color: var(--cor-cinza-2);
+
+  .progress {
+    height: 100%;
+    transition: all 1s;
+    --cor-progress-1: var(--cor-azul-1);
+    --cor-progress-2: #fff;
+    background: linear-gradient(90deg, var(--cor-progress-1) 0%, var(--cor-progress-2) 50%, var(--cor-progress-1) 100%);
+    background-size: 200% 200%;
+    box-shadow: 0 0 10px var(--cor-progress-1);
+    animation: amime 3s linear infinite;
+  }
+
+  @keyframes amime {
+    100% {
+      background-position-x: -200%;
+    }
+  }
+}
+
+.box-progress-step {
+  position: relative;
+  min-height: 53px;
+
+  .posicao-progress-bar {
+    position: absolute;
+    padding: 0 10%;
+    width: 100%;
+    top: 19px;
+    left: 0;
+  }
+
+  .posicao-itens {
+    position: absolute;
+    width: 100%;
+    padding: 0 8.5%;
+    z-index: 99;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .box-etapa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    position: relative;
+
+    p {
+      position: absolute;
+      top: 100%;
+      font-size: 14px;
+    }
+
+    .box-number {
+      font-size: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--cor-cinza-4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.5s;
+      border: solid 3px white;
+    }
+
+    .min-box-number {
+      width: 30px;
+      height: 30px;
+      margin-top: 5px;
+    }
+
+    .box-number-ative {
+      background-color: var(--cor-1);
+      color: var(--cor-4);
+    }
+  }
+}

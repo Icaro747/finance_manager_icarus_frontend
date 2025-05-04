@@ -10,22 +10,6 @@ class MaskUtil {
     return value == null || value === ""
   }
 
-
-  static StatusUsuario(valor) {
-    switch (valor) {
-      case 0:
-        return "Pendente";
-      case 1:
-        return "Aprovado";
-      case 2:
-        return "Rejeitado";
-      case 3:
-        return "Desligado";
-      default:
-        return "N/D";
-    }
-  }
-
   static applyNumero(numero) {
     try {
       // Converte o número para uma string
