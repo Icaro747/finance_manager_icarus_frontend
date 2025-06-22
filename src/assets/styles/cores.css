@@ -13,10 +13,261 @@
   --cor-preto-1: #383838;
   --cor-preto-2: #3a3a3a;
   --cor-preto-3: #3f3f3f;
-  --cor-laranja-1: #ffa733;
+  --cor-laranja-1: #f59e0b;
   --cor-amarelo-1: #ffce00;
-  --cor-vermelho-1: #ff0000;
+  --cor-vermelho-1: #ef4444;
   --cor-verde-1: #26d58c;
+
+  --cor-principal: #1a56db;
+  --cor-escuro: #1e429f;
+  --cor-claro: #ebf2ff;
+  --cor-ativo: #dce7ff;
+
+  --cor-componete-fixo: #fff;
+  --cor-primary-border: #c7d7fe;
+  --cor-secondary: #475569;
+  --cor-dark: #1e293b;
+  --cor-light-bg: #f8fafc;
+  --cor-border: #e2e8f0;
+  --shadow: rgba(0, 0, 0, 0.05);
+
+
+  /* ---dark-theme--- */
+
+  /* Cores de fundo */
+  --bg-dark: #0f172a;
+  --bg-main: #121a29;
+  --bg-surface: #131f35;
+  --bg-elevated: #1a2942;
+  /* Cores primárias */
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #60a5fa;
+  --primary-transparent: rgba(59, 130, 246, 0.15);
+  /* Cores de texto */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --bg-text: rgba(255, 255, 255, 0.1);
+  /* Cores de borda */
+  --border: rgba(255, 255, 255, 0.05);
+  --border-medium: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  /* Cores de status */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #8b5cf6;
+  /* Cores de mensagens */
+  --message-received-dark: #1a2942;
+  --message-sent-dark: #3b82f6;
+  /* Sombras */
+  --shadow: rgba(0, 0, 0, 0.2);
+}
+
+.dark-theme {
+  --cor-componete-fixo: var(--bg-dark);
+  --cor-principal: var(--text-muted);
+
+  .aside-chat {
+    border-color: var(--border) !important;
+  }
+
+  .box-messages {
+    .input-chat {
+      background-color: #1f2a3f;
+    }
+
+    .btn-send-chat {
+      background-color: var(--primary);
+    }
+
+    .messages {
+      .message-you {
+        background-color: var(--message-sent-dark);
+
+        p {
+          color: var(--cor-4);
+        }
+      }
+
+      .message-it {
+        background-color: var(--message-received-dark);
+
+        p {
+          color: var(--cor-4);
+        }
+      }
+    }
+  }
+
+  .btn-none.user-box {
+    &:hover {
+      background-color: #192d52;
+    }
+
+    &.bg-cor-azul-claro {
+      background-color: #192d52 !important;
+    }
+  }
+
+  .file-input-label.anexo-chat {
+    background-color: #1f2a3f;
+  }
+
+
+  .login-box-main {
+    background-color: var(--cor-2);
+  }
+
+  .p-dropdown-panel {
+    background: var(--bg-elevated);
+
+    .p-highlight,
+    .p-focus {
+      background: var(--bg-surface);
+    }
+  }
+
+  .p-dropdown,
+  .p-inputtext {
+    background: var(--bg-elevated);
+    color: var(--cor-3);
+    border-color: var(--border);
+
+    &:focus {
+      background: var(--primary-transparent);
+      color: var(--cor-3);
+    }
+  }
+
+  .list-group-item {
+    background-color: var(--bg-surface);
+    border-color: var(--border);
+  }
+
+  .panel-menu {
+    --text-cor: var(--primary);
+    --linha-cor: var(--primary-dark);
+    --hover-cor: var(--primary-transparent);
+  }
+
+  .btn-azul {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+
+    &:hover,
+    &.active {
+      background-color: var(--bg-elevated);
+      border-color: var(--bg-elevated);
+      color: var(--cor-4);
+
+      .ak {
+        --icon-cor: var(--cor-4);
+      }
+    }
+
+    &.active:hover {
+      background-color: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+  }
+
+  .btn-card .p-button-icon {
+    --icon-cor: var(--text-secondary) !important;
+  }
+
+  .card-parametros {
+
+    label {
+      color: var(--cor-4) !important;
+    }
+
+    p {
+      color: var(--text-secondary) !important;
+    }
+  }
+
+  .text-cor-dark {
+    color: var(--cor-4);
+  }
+
+  .p-sidebar {
+    background-color: var(--bg-dark);
+  }
+
+  .p-dialog {
+
+    .p-dialog-header,
+    .p-dialog-content {
+
+      background-color: var(--bg-dark);
+    }
+  }
+
+  .p-skeleton {
+    background-color: var(--bg-surface);
+
+    &::after {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0), var(--bg-elevated), rgba(255, 255, 255, 0));
+    }
+  }
+
+  .layout-cor {
+    --bg-cor-layout: var(--cor-dark);
+    --bg-cor-app: var(--cor-dark);
+    --bd-cor-app: var(--border);
+    --logo-cor: var(--cor-4);
+  }
+
+  .card {
+    &.border-cor-branca {
+      border-color: var(--bg-surface) !important;
+    }
+
+    background-color: var(--bg-surface);
+  }
+
+  .main-menu {
+    --cor-text: var(--primary);
+    --cor-hover-item: rgba(59, 130, 246, 0.2);
+    --cor-hover-item-2: var(--cor-dark);
+  }
+
+  .main-menu .sub-menu .list-submenu {
+
+    .item-submenu,
+    .sub-top-submenu {
+
+      &.active,
+      &:hover {
+        .icon-box {
+
+          .pi,
+          .ak {
+            color: var(--primary-dark);
+            --icon-cor: var(--primary-dark) !important;
+          }
+        }
+      }
+    }
+  }
+
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  p,
+  label,
+  span {
+    color: var(--cor-4);
+  }
+}
+
+.ak.ak-cor-secondary {
+  --icon-cor: var(--cor-secondary) !important;
 }
 
 .ak.ak-cor-cinza-4 {
@@ -61,6 +312,19 @@
 
 .border-cor-laranja {
   border-color: var(--cor-laranja-1) !important;
+}
+
+.p-row-odd.border-cor-laranja {
+  background-color: var(--cor-laranja-1) !important;
+  color: var(--cor-4);
+}
+
+.bg-cor-azul-claro {
+  background-color: var(--cor-claro) !important;
+}
+
+.bg-cor-azul-principal {
+  background-color: var(--cor-principal) !important;
 }
 
 .bg-cor-azul {
@@ -109,6 +373,34 @@
 
 .bg-cor-preto-2 {
   background-color: var(--cor-preto-2) !important;
+}
+
+.text-cor-principal {
+  color: var(--cor-principal);
+}
+
+.text-cor-secondary {
+  color: var(--cor-secondary);
+}
+
+.text-cor-claro {
+  color: var(--cor-claro);
+}
+
+.text-cor-dark {
+  color: var(--cor-dark);
+}
+
+.text-cor-verde {
+  color: var(--cor-verde-1) !important;
+}
+
+.text-cor-vermelho {
+  color: var(--cor-vermelho-1) !important;
+}
+
+.text-cor-amarelo {
+  color: var(--cor-amarelo-1) !important;
 }
 
 .text-cor-1 {

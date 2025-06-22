@@ -14,6 +14,7 @@ import { useNotification } from "context/NotificationContext";
 
 import Api from "utils/Api";
 import CalendarioLinguas from "utils/CalendarioLinguas";
+import MaskUtil from "utils/MaskUtil";
 
 const Chart = () => {
   const Notify = useNotification();
@@ -104,8 +105,8 @@ const Chart = () => {
       if (item.type === "bigsNumbers") {
         renderData.push(
           <Col
-            isEditar
             onChange={onChangeJsonData}
+            title={item.title}
             isCard
             index={index}
             size={item.size}
@@ -121,7 +122,6 @@ const Chart = () => {
         renderData.push(
           <Col
             index={index}
-            isEditar
             onChange={onChangeJsonData}
             title={item.title}
             descricao={item.descricao}
@@ -146,6 +146,8 @@ const Chart = () => {
     const Go = async () => {
       try {
         setLoading(true);
+        setJsonData(new Map());
+
         const linha = await Requisicao.Get({
           endpoint: "/Grafico/Linha/ByRangeData",
           params: {
@@ -184,50 +186,108 @@ const Chart = () => {
           config: Auth.GetHeaders()
         });
 
+        const comparativoCategorias = await Requisicao.Get({
+          endpoint: "/Grafico/Column/ComparativoPorCategoria",
+          params: {
+            referencia: new Date(dates[1]).toISOString()
+          },
+          config: Auth.GetHeaders()
+        });
+
+        const comparacaoAnoAtual = await Requisicao.Get({
+          endpoint: "/Grafico/Analise/ComparacaoAnoAtual",
+          params: {
+            mesReferencia: new Date(dates[1]).toISOString()
+          },
+          config: Auth.GetHeaders()
+        });
+
+        const comparacaoMesmoMesAnosAnteriores = await Requisicao.Get({
+          endpoint: "/Grafico/Analise/ComparacaoMesmoMesAnosAnteriores",
+          params: {
+            mesReferencia: new Date(dates[1]).toISOString()
+          },
+          config: Auth.GetHeaders()
+        });
+
+        const FormatarObjeto = (input) => ({
+          titulo: input.titulo,
+          nome: input.status, // titulo -> nome
+          valor: MaskUtil.applyMonetaryMask(input.valorAtual), // valorAtual -> valor
+          mensagem: input.mensagem,
+          typeValor: "numerico", // fixo, pois no exemplo é numérico
+          porcentagem: input.variacaoPercentual, // variacaoPercentual -> porcentagem
+          icone: input.icone || "", // ex: mapeando check para um ícone da biblioteca pi (pode ajustar)
+          cores: {
+            icone: "var(--cor-4)", // fixo como no exemplo
+            background: "var(--cor-4)", // fixo
+            background_icone: input.cor // usa a cor do primeiro objeto
+          }
+        });
+
         const thesJson = [
           {
             index: 0,
+            sizeSm: 6,
+            sizeMd: 6,
+            sizeLg: 6,
+            type: "bigsNumbers",
+            title: FormatarObjeto(comparacaoAnoAtual)?.titulo || "",
+            chartData: FormatarObjeto(comparacaoAnoAtual)
+          },
+          {
+            index: 1,
+            sizeSm: 6,
+            sizeMd: 6,
+            sizeLg: 6,
+            type: "bigsNumbers",
+            title:
+              FormatarObjeto(comparacaoMesmoMesAnosAnteriores)?.titulo || "",
+            chartData: FormatarObjeto(comparacaoMesmoMesAnosAnteriores)
+          },
+          {
+            index: 2,
             size: 12,
-            sizeSm: null,
-            sizeMd: null,
-            sizeLg: null,
-            sizeXl: null,
             type: "grafico",
             title: "Linha de tempo de gatos",
             chartData: linha
           },
           {
-            index: 1,
-            size: 4,
-            sizeSm: null,
-            sizeMd: null,
-            sizeLg: null,
-            sizeXl: null,
+            index: 3,
+            sizeSm: 12,
+            sizeMd: 6,
+            sizeLg: 6,
+            sizeXl: 4,
             type: "grafico",
             title: "Todos os gastos",
             chartData: pizza0
           },
           {
-            index: 2,
-            size: 4,
-            sizeSm: null,
-            sizeMd: null,
-            sizeLg: null,
-            sizeXl: null,
+            index: 4,
+            sizeSm: 12,
+            sizeMd: 6,
+            sizeLg: 6,
+            sizeXl: 4,
             type: "grafico",
             title: "Gastos com cartão",
             chartData: pizza1
           },
           {
-            index: 3,
-            size: 4,
-            sizeSm: null,
-            sizeMd: null,
-            sizeLg: null,
-            sizeXl: null,
+            index: 5,
+            sizeSm: 12,
+            sizeMd: 6,
+            sizeLg: 6,
+            sizeXl: 4,
             type: "grafico",
             title: "Gastos na conta corrente",
             chartData: pizza2
+          },
+          {
+            index: 6,
+            size: 12,
+            type: "grafico",
+            title: "Comparativo de gastos por categoria (Mês atual x anterior)",
+            chartData: comparativoCategorias
           }
         ];
         setJsonData(new Map(thesJson.map((item) => [item.index, item])));
@@ -259,27 +319,25 @@ const Chart = () => {
             icon="ak ak-clock"
             className="btn-quadro active"
             onClick={() => {
-              function getDateRange() {
+              function GetDateRange() {
                 const today = new Date();
 
-                // Primeiro dia do mês passado
-                const firstDayLastMonth = new Date(
+                const firstDayThisMonth = new Date(
                   today.getFullYear(),
-                  today.getMonth() - 1,
+                  today.getMonth(),
                   1
                 );
 
-                // Último dia do mês atual
                 const lastDayThisMonth = new Date(
                   today.getFullYear(),
                   today.getMonth() + 1,
                   0
                 );
 
-                return [firstDayLastMonth, lastDayThisMonth];
+                return [firstDayThisMonth, lastDayThisMonth];
               }
 
-              setDates(getDateRange());
+              setDates(GetDateRange());
             }}
           />
         </div>

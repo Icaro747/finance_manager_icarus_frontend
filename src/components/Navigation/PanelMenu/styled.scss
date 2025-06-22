@@ -1,9 +1,15 @@
 .main-menu {
-  --cor-hover-item: #0016b3;
+  --cor-text: var(--cor-principal);
+  --cor-hover-item: var(--cor-ativo);
+  --cor-hover-item-2: var(--cor-principal);
   --time-animation: 0.5s;
 
   width: 100%;
   position: relative;
+
+  .cor-text {
+    color: var(--cor-text) !important;
+  }
 
   .panel-menu {
     list-style: none;
@@ -29,6 +35,11 @@
       border-radius: 0;
       min-width: var(--size-box);
       min-height: var(--size-box);
+      background-color: transparent;
+
+      .ak {
+        --icon-cor: var(--cor-text);
+      }
     }
 
     .item-primeira {
@@ -42,21 +53,20 @@
       &:hover p {
         padding-left: 1rem !important;
       }
+      &.active .icon-box {
+        background-color: var(--cor-hover-item);
+      }
 
       &:hover,
       &.active {
         p {
           padding-left: 0;
           margin-bottom: 0px;
+
           border-color: var(--cor-hover-item);
         }
         .icon-box {
           border-radius: 10px 0 0 10px;
-          background-color: var(--cor-hover-item);
-
-          .ak {
-            --icon-cor: white !important;
-          }
         }
       }
 
@@ -73,8 +83,9 @@
         width: 100%;
         border-bottom: solid 3px transparent;
         text-align: start;
-        font-weight: 700;
+        font-weight: 500;
         margin-bottom: -3px;
+        color: var(--cor-text);
 
         &.not-show {
           opacity: 0;
@@ -89,7 +100,6 @@
     border: 0;
     position: absolute;
     width: var(--max-size);
-    height: 100%;
     background-color: var(--cor-hover-item);
     color: white;
     top: 0;
@@ -128,6 +138,10 @@
         transition: var(--time-animation);
       }
 
+      .item-submenu {
+        padding: 2px 0;
+      }
+
       .item-submenu,
       .sub-top-submenu {
         display: flex;
@@ -136,16 +150,31 @@
         gap: 1rem;
         transition: var(--time-animation);
 
+        .icon-box {
+          background-color: transparent;
+          .ak {
+            --icon-cor: var(--cor-text);
+          }
+          .bi,
+          .pi {
+            color: var(--cor-text);
+          }
+        }
+
         &:hover,
         &.active {
           p {
             padding-left: 1rem;
           }
           .icon-box {
-            background-color: #ffffff;
-          }
-          .ak {
-            --icon-cor: white !important;
+            background-color: var(--cor-hover-item-2);
+            .ak {
+              --icon-cor: var(--cor-hover-item) !important;
+            }
+            .bi,
+            .pi {
+              color: var(--cor-hover-item);
+            }
           }
         }
 
@@ -162,7 +191,7 @@
           text-overflow: ellipsis;
           overflow: hidden;
           font-size: 12.8px;
-          font-weight: 600;
+          font-weight: 500;
         }
 
         .icon-box {
@@ -200,7 +229,7 @@
       .list-linha {
         min-width: 2px;
         border-radius: 5px;
-        background-color: #ffffff;
+        background-color: var(--cor-text);
         margin: 0 13px;
       }
 

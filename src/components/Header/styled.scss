@@ -7,6 +7,11 @@
   background-color: var(--cor-3);
   min-height: var(--height-header);
   position: relative;
+  transition: 0.5s;
+
+  &.margem-header {
+    margin-left: 190px;
+  }
 
   h1 {
     margin: 0;
@@ -16,10 +21,12 @@
 }
 
 .header-box {
+  --bd-cor-app: #d5d7da;
   min-height: var(--height-header);
   width: 100%;
   height: 100%;
-  background-color: #ffffff;
+  background-color: var(--cor-componete-fixo);
+  border-bottom: solid 1px var(--bd-cor-app);
   box-shadow:
     0 1px 15px rgba(0, 0, 0, 0.04),
     0 1px 6px rgba(0, 0, 0, 0.04);
@@ -45,10 +52,6 @@
   flex-direction: row;
   align-items: center;
   flex-wrap: nowrap;
-
-  span {
-    color: #878787;
-  }
 
   .box-text-user {
     display: flex;

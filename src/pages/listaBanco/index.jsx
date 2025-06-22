@@ -219,7 +219,7 @@ const ListaBanco = () => {
     try {
       await Requisicao.Post({
         endpoint: "/Cartao",
-        data: { ...DataCartao, Banco_Id: IdBanco },
+        data: { ...DataCartao, banco_Id: IdBanco },
         config: Auth.GetHeaders()
       });
       Notify({
@@ -405,7 +405,7 @@ const ListaBanco = () => {
         <BoxCards itens={getListaFiltrada().length}>
           {getListaFiltrada().map((item) => (
             <Card
-              key={item.banco_id}
+              key={item.banco_Id}
               LayoutLista={LayoutLista}
               HeaderComponent={
                 <div className="d-flex flex-row align-items-center gap-3">
@@ -427,16 +427,16 @@ const ListaBanco = () => {
               btnsCardWidth={10}
               onExcluir={() => {
                 setShowExcluir(true);
-                setIdBanco(item.banco_id);
+                setIdBanco(item.banco_Id);
               }}
               onEditar={() => {
-                CarregarBanco(item.banco_id);
-                setIdBanco(item.banco_id);
+                CarregarBanco(item.banco_Id);
+                setIdBanco(item.banco_Id);
               }}
               onDetalhes={() => {
-                setIdBanco(item.banco_id);
-                GetCartao(item.banco_id);
-                CarregarBanco(item.banco_id, true);
+                setIdBanco(item.banco_Id);
+                GetCartao(item.banco_Id);
+                CarregarBanco(item.banco_Id, true);
               }}
             />
           ))}

@@ -35,7 +35,7 @@ const MainBox = ({ children }) => {
   }, [location, layout]);
 
   return (
-    <S.Box $isHome={IsHome} $bgColor={Cor} $bgImg={Img}>
+    <S.Box $isHome={IsHome} $bgColor={Cor} $bgImg={Img} className="layout-cor">
       {children}
     </S.Box>
   );

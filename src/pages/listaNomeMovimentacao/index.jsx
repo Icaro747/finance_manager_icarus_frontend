@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
@@ -7,8 +7,7 @@ import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 
-import { BoxCards, Card } from "components/CardLayout";
-import ConfirmDialog from "components/ConfirmDialog";
+import { BoxCards, BtnsLayout } from "components/CardLayoutV2";
 import FormNomeMovimentacao from "components/FormNomeMovimentacao";
 import ModalLateral from "components/ModalLateral";
 
@@ -18,12 +17,10 @@ import { useNotification } from "context/NotificationContext";
 
 import Api from "utils/Api";
 import MaskUtil from "utils/MaskUtil";
-import useQuery from "utils/useQuery";
 
 const ListaNomeMovimentacao = () => {
   // Contextos e utilitários
   const Auth = useAuth();
-  const Query = useQuery();
   const Notify = useNotification();
   const Requisicao = new Api(Auth.logout, Notify);
   const { setLoading } = useLoading();
@@ -107,49 +104,56 @@ const ListaNomeMovimentacao = () => {
 
   const CriarNomeMovimentacao = async () => true;
 
+  // Função auxiliar para atualizar NomeMovimentacao
+  const AtualizarNomeMovimentacaoApi = async (data) => {
+    await Requisicao.Put({
+      endpoint: `/NomeMovimentacao/${IdNomeMovimentacao}`,
+      data,
+      config: Auth.GetHeaders()
+    });
+  };
+
+  // Função auxiliar para criar nova categoria e retornar o ID
+  const CriarCategoriaENomeMovimentacao = async (categoriaNome) => {
+    const response = await Requisicao.Post({
+      endpoint: "/Categoria",
+      data: { nome: categoriaNome },
+      config: Auth.GetHeaders()
+    });
+    return response.categoria_Id;
+  };
+
   const AtualizarNomeMovimentacao = async () => {
     try {
+      let categoriaId = null;
+
+      // Determina o categoria_Id conforme o tipo de categoria
       if (typeof DataNomeMovimentacao?.categoria?.value === "string") {
-        await Requisicao.Put({
-          endpoint: `/NomeMovimentacao/${IdNomeMovimentacao}`,
-          data: {
-            ...DataNomeMovimentacao,
-            categoria_Id: DataNomeMovimentacao.categoria.value
-          },
-          config: Auth.GetHeaders()
-        });
+        categoriaId = DataNomeMovimentacao.categoria.value;
       } else if (typeof DataNomeMovimentacao?.categoria === "string") {
-        const responses = await Requisicao.Post({
-          endpoint: "/Categoria",
-          data: { nome: DataNomeMovimentacao?.categoria },
-          config: Auth.GetHeaders()
-        });
-        const Request = {
-          ...DataNomeMovimentacao,
-          categoria_Id: responses.categoria_id
-        };
-        await Requisicao.Put({
-          endpoint: `/NomeMovimentacao/${IdNomeMovimentacao}`,
-          data: Request,
-          config: Auth.GetHeaders()
-        });
-      } else {
-        await Requisicao.Put({
-          endpoint: `/NomeMovimentacao/${IdNomeMovimentacao}`,
-          data: { ...DataNomeMovimentacao, categoria_Id: null },
-          config: Auth.GetHeaders()
-        });
+        categoriaId = await CriarCategoriaENomeMovimentacao(
+          DataNomeMovimentacao.categoria
+        );
       }
+
+      // Monta o payload para atualização
+      const payload = {
+        ...DataNomeMovimentacao,
+        Categoria_Id: categoriaId
+      };
+
+      await AtualizarNomeMovimentacaoApi(payload);
+
       Notify({
         type: "sucesso",
-        message: "Nome de Movimentacao atualizada com sucesso"
+        message: "Nome de Movimentação atualizado com sucesso"
       });
       return true;
     } catch (error) {
       console.error(error);
       Notify({
         type: "erro",
-        message: "Erro ao tentar atualizar a nome de movimentacao"
+        message: "Erro ao tentar atualizar o nome de movimentação"
       });
       return false;
     }
@@ -185,27 +189,55 @@ const ListaNomeMovimentacao = () => {
     Init();
   }, []);
 
-  // Filtragem e ordenação
-  const GetListaFiltrada = () => {
-    let listaFiltrada = [...Lista];
+  const GetCardProps = (item) =>
+    item
+      ? {
+          papel: "nome movimentoção",
+          titulo: item.nome,
+          borderColor:
+            item.categoria === null
+              ? "border-cor-laranja"
+              : "border-cor-branca",
+          infoFrente: [
+            { label: "Categoria", valor: item.categoria?.nome ?? "N/D" }
+          ],
+          onDetalhes: () => {
+            CarregarNomeMovimentacao(item.nome_movimentacao_id, true);
+            GetMovimentacaoByNome(item.nome_movimentacao_id);
+            setShowModalDetalhes(true);
+          },
+          onExcluir: () => {
+            setShowExcluir(true);
+            setIdNomeMovimentacao(item.nome_movimentacao_id);
+          },
+          onEditar: () => {
+            CarregarNomeMovimentacao(item.nome_movimentacao_id);
+            setIdNomeMovimentacao(item.nome_movimentacao_id);
+          }
+        }
+      : {};
 
-    if (listaFiltrada.length === 0) return [];
+  // Filtragem e ordenação
+  const listaFiltrada = useMemo(() => {
+    let newListaFiltrada = [...Lista];
+
+    if (newListaFiltrada.length === 0) return [];
 
     // Aplicar filtro de busca
     if (Buscar !== "") {
-      listaFiltrada = listaFiltrada.filter((item) =>
+      newListaFiltrada = newListaFiltrada.filter((item) =>
         item.nome.toLowerCase().includes(Buscar.toLowerCase())
       );
     }
 
     // Aplicar ordenação
-    listaFiltrada.sort((a, b) => {
+    newListaFiltrada.sort((a, b) => {
       const comparacao = a.nome.localeCompare(b.nome);
       return OrdemCrescente ? comparacao : -comparacao;
     });
 
-    return listaFiltrada;
-  };
+    return newListaFiltrada;
+  }, [Lista, Buscar, OrdemCrescente]);
 
   return (
     <section>
@@ -214,7 +246,7 @@ const ListaNomeMovimentacao = () => {
           <div className="d-flex flex-row flex-wrap gap-2">
             <Button
               label="Nova NomeMovimentacao"
-              className="btn btn-quadro active"
+              className="btn btn-azul"
               icon="ak ak-plus-circle"
               iconPos="right"
               onClick={() => {
@@ -232,68 +264,28 @@ const ListaNomeMovimentacao = () => {
               />
             </IconField>
             <Button
-              className="btn-quadro active"
+              className="btn-azul"
               icon={`pi ${
                 OrdemCrescente ? "pi-sort-alpha-down" : "pi-sort-alpha-up-alt"
               }`}
               onClick={() => setOrdemCrescente((e) => !e)}
             />
           </div>
-          <div className="d-flex flex-row flex-wrap gap-2">
-            <Button
-              className={`btn-quadro ${!LayoutLista ? "active" : ""}`}
-              label="Card"
-              icon="ak ak-grid-four-fill"
-              onClick={() => setLayoutLista(false)}
-            />
-            <Button
-              className={`btn-quadro ${LayoutLista ? "active" : ""}`}
-              label="Lista"
-              icon="ak ak-rows-fill"
-              onClick={() => setLayoutLista(true)}
-            />
-          </div>
+          <BtnsLayout
+            setLayoutLista={setLayoutLista}
+            LayoutLista={LayoutLista}
+          />
         </div>
         <hr />
       </header>
 
-      <article className="card not-shadow p-3 mb-3 bg-cor-cinza-3">
-        <BoxCards itens={GetListaFiltrada().length}>
-          {GetListaFiltrada().map((item) => (
-            <Card
-              key={item.nome_movimentacao_id}
-              LayoutLista={LayoutLista}
-              borderColor={
-                item.categoria === null
-                  ? "border-cor-laranja"
-                  : "border-cor-branca"
-              }
-              HeaderComponent={
-                <p className="m-0 fs-5 truncate-text">
-                  <b>{item.nome}</b>
-                </p>
-              }
-              parametros={[
-                { label: "Categoria", valor: item.categoria?.nome ?? "N/D" }
-              ]}
-              detalhesWidth={15}
-              btnsCardWidth={10}
-              onDetalhes={() => {
-                CarregarNomeMovimentacao(item.nome_movimentacao_id, true);
-                GetMovimentacaoByNome(item.nome_movimentacao_id);
-                setShowModalDetalhes(true);
-              }}
-              onExcluir={() => {
-                setShowExcluir(true);
-                setIdNomeMovimentacao(item.nome_movimentacao_id);
-              }}
-              onEditar={() => {
-                CarregarNomeMovimentacao(item.nome_movimentacao_id);
-                setIdNomeMovimentacao(item.nome_movimentacao_id);
-              }}
-            />
-          ))}
-        </BoxCards>
+      <article className="mb-3">
+        <BoxCards
+          itens={listaFiltrada}
+          getEntityId={(entity) => entity.nome_movimentacao_id}
+          renderItem={GetCardProps}
+          layoutLista={LayoutLista}
+        />
       </article>
 
       <ModalLateral
@@ -375,19 +367,6 @@ const ListaNomeMovimentacao = () => {
           </div>
         }
       />
-
-      {/* <ConfirmDialog
-            visible={ShowExcluir}
-            message={
-              <>
-                Você está <b>excluindo uma NomeMovimentacao</b>, quer continuar?
-              </>
-            }
-            onHide={() => setShowExcluir(false)}
-            onConfirm={DeleteNomeMovimentacao}
-            confirmText="Excluir"
-            cancelText="Cancelar"
-          /> */}
     </section>
   );
 };

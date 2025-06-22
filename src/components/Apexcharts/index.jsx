@@ -62,7 +62,7 @@ const Apexcharts = React.memo(({ data }) => {
           options={OpcoesGraficas}
           series={SeriesDados}
           type={OpcoesGraficas.type}
-          height={400}
+          height={300}
         />
       )}
     </div>

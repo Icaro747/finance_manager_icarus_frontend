@@ -1,4 +1,4 @@
-import React, { createContext, useState, useMemo, useContext } from "react";
+import { createContext, useState, useMemo, useContext, useEffect } from "react";
 
 import PropTypes from "prop-types";
 
@@ -7,23 +7,47 @@ const LayoutContext = createContext();
 
 // Criando o provedor de contexto
 export const LayoutProvider = ({ children }) => {
-  const [statuShowMenu, setStatuShowMenu] = useState(false);
+  const [FixedShowMenu, setFixedShowMenu] = useState(false);
+  const [StatuShowMenu, setStatuShowMenu] = useState(false);
   const [statuShowDialogHelp, setStatuShowDialogHelp] = useState(false);
+
   const [Cor, setCor] = useState(null);
   const [Img, setImg] = useState(null);
 
+  const [isDarkTheme, setIsDarkTheme] = useState(() => {
+    const savedTheme = localStorage.getItem("dark-theme");
+    return savedTheme === "true"; // Converte a string para boolean
+  });
+
+  const toggleTheme = () => {
+    const newTheme = !isDarkTheme;
+    setIsDarkTheme(newTheme);
+    document.documentElement.classList.toggle("dark-theme", newTheme);
+    localStorage.setItem("dark-theme", newTheme); // Salva o estado no localStorage
+  };
+
+  useEffect(() => {
+    if (isDarkTheme) {
+      document.documentElement.classList.add("dark-theme");
+    }
+  }, [isDarkTheme]);
+
   const value = useMemo(
     () => ({
-      statuShowMenu,
+      StatuShowMenu,
       setStatuShowMenu,
+      FixedShowMenu,
+      setFixedShowMenu,
       statuShowDialogHelp,
       setStatuShowDialogHelp,
       Cor,
       setCor,
       Img,
-      setImg
+      setImg,
+      isDarkTheme,
+      toggleTheme
     }),
-    [statuShowMenu, statuShowDialogHelp, Cor, Img]
+    [FixedShowMenu, StatuShowMenu, statuShowDialogHelp, Cor, Img, isDarkTheme]
   );
 
   return (

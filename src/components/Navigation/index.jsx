@@ -12,26 +12,34 @@ import PanelMenu from "./PanelMenu";
 import "./styled.scss";
 
 const Navigation = () => {
-  const layout = useLayout();
+  const { setStatuShowMenu, FixedShowMenu } = useLayout();
   const { ExpandirMenu, setExpandirMenu } = useNavegation();
 
   const [isSticky, setIsSticky] = useState(false);
 
   const handleMouseEnter = () => {
-    if (layout.statuShowMenu === false) setExpandirMenu(true);
+    if (FixedShowMenu === false) {
+      setExpandirMenu(true);
+      setStatuShowMenu(true);
+    }
   };
 
   const handleMouseLeave = () => {
-    if (layout.statuShowMenu === false) setExpandirMenu(false);
+    if (FixedShowMenu === false) {
+      setExpandirMenu(false);
+      setStatuShowMenu(false);
+    }
   };
 
   const CloseMenu = () => {
     setExpandirMenu(false);
+    setStatuShowMenu(false);
   };
 
   useEffect(() => {
-    setExpandirMenu(layout.statuShowMenu);
-  }, [layout.statuShowMenu, setExpandirMenu]);
+    setExpandirMenu(FixedShowMenu);
+    setStatuShowMenu(FixedShowMenu);
+  }, [FixedShowMenu, setExpandirMenu]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,7 +63,7 @@ const Navigation = () => {
     >
       <div className="d-flex flex-column h-100">
         <div
-          className={classNames("layout-box-logo", {
+          className={classNames("layout-box-logo layout-cor", {
             "layout-logo-min": !ExpandirMenu,
             "layout-logo-max": ExpandirMenu
           })}
@@ -69,17 +77,11 @@ const Navigation = () => {
           </button>
         </div>
 
-        <div
-          id="menu"
-          className={classNames("layout-menu h-100", { sticky: isSticky })}
-        >
+        <div id="menu" className="layout-menu h-100">
           <PanelMenu />
         </div>
       </div>
-      <div
-        className="card m-3 not-shadow"
-        style={{ backgroundColor: "#94949426" }}
-      >
+      <div className="card m-3 not-shadow">
         <div className="d-flex flex-column align-items-start">
           <Button
             label="Ajuda & Suporte"

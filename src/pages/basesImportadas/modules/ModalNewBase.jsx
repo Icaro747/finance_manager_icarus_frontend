@@ -29,10 +29,16 @@ const ModalNewBase = ({ Show, setShow }) => {
   const Requisicao = new Api(Auth.logout, Notify);
   const { setLoading } = useLoading();
 
-  const requiredFields = ["Data", "Lançamento", "Tipo", "Valor"];
+  const requiredFields = [
+    { id: "data", label: "Data" },
+    { id: "nomeMovimentacao", label: "Nome da Movimentacao" },
+    { id: "tipoMovimentacao", label: "Tipo da Movimentacao" },
+    { id: "valor", label: "Valor" }
+  ];
 
   const [Step, setStep] = useState(0);
   const [jsonData, setJsonData] = useState([]);
+  const [jsonDataTemporary, setJsonDataTemporary] = useState([]);
   const [PorcentagemConclusao, setPorcentagemConclusao] = useState(0);
   const [SuccessCount, setSuccessCount] = useState(0);
   const [ErrorCount, setErrorCount] = useState(0);
@@ -43,23 +49,13 @@ const ModalNewBase = ({ Show, setShow }) => {
   const [OptBanco, setOptBanco] = useState([]);
   const [Link, setLink] = useState(null);
 
-  // Função para formatar a data do padrão brasileiro para o americano
-  const FormatDate = (date) => {
-    const [day, month, year] = date.split("/");
-    return `${year}-${month}-${day}`;
-  };
-
-  // Função para transformar o valor em número
-  const FormatValue = (value) => {
-    const fv = Number(
-      value.replace("R$", "").replace(".", "").replace(",", ".")
-    );
-
-    if (fv < 0) {
-      return fv * -1;
-    }
-    return fv;
-  };
+  const [csvHeaders, setCsvHeaders] = useState([]);
+  const [fieldMapping, setFieldMapping] = useState({
+    data: null,
+    nomeMovimentacao: null,
+    tipoMovimentacao: null,
+    valor: null
+  });
 
   const HandleFileUpload = (event) => {
     const file = event.files[0];
@@ -69,34 +65,26 @@ const ModalNewBase = ({ Show, setShow }) => {
         header: true,
         skipEmptyLines: true,
         complete: (result) => {
-          const { data } = result;
+          const { data, meta } = result;
 
-          // Verificar se todos os campos obrigatórios estão presentes
-          const hasRequiredFields = requiredFields.every((field) =>
-            Object.keys(data[0]).includes(field)
-          );
-
-          if (!hasRequiredFields) {
+          // Verificar se o arquivo contém dados
+          if (data.length === 0) {
             Notify({
               type: "aviso",
-              message: `O arquivo CSV deve conter os seguintes campos: ${requiredFields.join(", ")}`
+              message: "O arquivo CSV está vazio."
             });
             return;
           }
 
-          // Converter para o formato JSON desejado
-          const formattedData = data.map((row, i) => ({
-            index: i,
-            data: FormatDate(row.Data), // Formatar a data
-            valor: FormatValue(row.Valor), // Transformar o valor em número
-            nomeMovimentacao: row["Lançamento"],
-            tipoMovimentacao: row.Tipo
-          }));
+          // Armazenar os dados diretamente no estado
+          setJsonDataTemporary(data);
 
-          setJsonData(formattedData);
+          // Capturar os cabeçalhos do CSV
+          setCsvHeaders(meta.fields);
+
           Notify({
             type: "sucesso",
-            message: "Arquivo processado com sucesso!"
+            message: "Arquivo carregado com sucesso!"
           });
           setStep((e) => e + 1);
         },
@@ -116,14 +104,38 @@ const ModalNewBase = ({ Show, setShow }) => {
     }
   };
 
+  const CadastraMapeamento = async () => {
+    try {
+      setLoading(true);
+      const payload = {
+        nome: "Mapeamento padrão",
+        itensMapeamentos: Object.entries(jsonData).map(
+          ([campoDestino, campoOrigem]) => ({
+            campo_Destino: campoDestino,
+            campo_Origem: campoOrigem
+          })
+        )
+      };
+      await Requisicao.Post({
+        endpoint: "/Mapeamento",
+        data: payload,
+        config: Auth.GetHeaders()
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const SendRequests = async () => {
     let success = 0;
     let errors = 0;
     const failed = [];
 
-    /* eslint-disable no-await-in-loop */
     for (const item of jsonData) {
       try {
+        // eslint-disable-next-line no-await-in-loop
         const response = await Requisicao.Post({
           endpoint: "/Movimentacao",
           data: {
@@ -146,15 +158,17 @@ const ModalNewBase = ({ Show, setShow }) => {
           failed.push(item);
         }
       } catch (error) {
-        console.error("Erro na requisição:", error);
         errors++;
         failed.push(item);
       }
 
       // Atualizar a porcentagem de conclusão
-      setPorcentagemConclusao(((success + errors) / jsonData.length) * 100);
+      const total = jsonData.length;
+      const concluido = success + errors;
+      const porcentagem = Math.round((concluido / total) * 10000) / 100;
+
+      setPorcentagemConclusao(porcentagem);
     }
-    /* eslint-enable no-await-in-loop */
 
     setSuccessCount(success);
     setErrorCount(errors);
@@ -190,6 +204,54 @@ const ModalNewBase = ({ Show, setShow }) => {
       SendRequests();
     }
   }, [Step]);
+
+  useEffect(() => {
+    // Função para formatar a data do padrão brasileiro para o americano
+    const FormatDate = (date) => {
+      const [day, month, year] = date.split("/");
+      return `${year}-${month}-${day}`;
+    };
+
+    // Função para transformar o valor em número
+    const FormatValue = (value) => {
+      if (typeof value !== "string") return 0;
+
+      const cleaned = value
+        .replace("R$ ", "")
+        .replace(/\./g, "") // Remove pontos dos milhares
+        .replace(",", ".") // Troca vírgula por ponto decimal
+        .trim();
+
+      const parsed = Number(cleaned);
+
+      // eslint-disable-next-line no-restricted-globals
+      return isNaN(parsed) ? 0 : Math.abs(parsed);
+    };
+
+    const MapearLista = () => {
+      try {
+        if (
+          fieldMapping.valor &&
+          fieldMapping.nomeMovimentacao &&
+          fieldMapping.tipoMovimentacao &&
+          fieldMapping.data
+        ) {
+          const lista = jsonDataTemporary.map((item, i) => ({
+            index: i,
+            data: FormatDate(item[fieldMapping.data]),
+            nomeMovimentacao: item[fieldMapping.nomeMovimentacao],
+            tipoMovimentacao: item[fieldMapping.tipoMovimentacao],
+            valor: FormatValue(item[fieldMapping.valor])
+          }));
+          setJsonData(lista);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    MapearLista();
+  }, [fieldMapping]);
 
   return (
     <Sidebar
@@ -262,22 +324,53 @@ const ModalNewBase = ({ Show, setShow }) => {
               </form>
             </div>
           )}
+
           {Step === 1 && (
             <>
               <p className="fs-4">
                 <b>Validamos sua base de dados</b>
               </p>
+              <div className="card p-3 mb-3">
+                <p className="fs-4">
+                  <b>Mapeie os campos do arquivo CSV</b>
+                </p>
+                <form className="row g-3">
+                  {requiredFields.map((field) => (
+                    <div className="col-6" key={field.id}>
+                      <div className="d-flex flex-column gap-2">
+                        <label
+                          htmlFor={field.id}
+                        >{`Campo esperado: ${field.label}`}</label>
+                        <Dropdown
+                          id={field.id}
+                          className="w-100"
+                          options={csvHeaders}
+                          value={fieldMapping[field.id]}
+                          onChange={(e) =>
+                            setFieldMapping((prev) => ({
+                              ...prev,
+                              [field.id]: e.value
+                            }))
+                          }
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </form>
+              </div>
               <DataTable value={jsonData} stripedRows paginator rows={10}>
-                <Column field="nomeMovimentacao" header="Nome" />
-                <Column field="tipoMovimentacao" header="Tipo" />
+                <Column field="nomeMovimentacao" header="Nome" sortable />
+                <Column field="tipoMovimentacao" header="Tipo" sortable />
                 <Column
                   field="valor"
                   header="Valor"
+                  sortable
                   body={(rowData) => MaskUtil.applyMonetaryMask(rowData.valor)}
                 />
                 <Column
                   field="data"
                   header="Data"
+                  sortable
                   body={(rowData) => MaskUtil.applyDataMask(rowData.data)}
                 />
                 <Column

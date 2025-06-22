@@ -7,6 +7,7 @@ import SubMenuBackButton from "./SubMenuBackButton";
 import SubMenuItem from "./SubMenuItem";
 
 const SubMenu = ({
+  minHeight,
   subMenuShow,
   subMenuName,
   subMenuLista,
@@ -21,6 +22,7 @@ const SubMenu = ({
       { "sub-menu-exit": !subMenuShow },
       { "not-show": !expandirMenu }
     )}
+    style={{ minHeight: `${minHeight}px` }}
   >
     <SubMenuBackButton
       onClick={() => {
@@ -52,7 +54,8 @@ SubMenu.propTypes = {
   ).isRequired,
   expandirMenu: PropTypes.bool.isRequired,
   setSubMenuShow: PropTypes.func.isRequired,
-  setId: PropTypes.func.isRequired
+  setId: PropTypes.func.isRequired,
+  minHeight: PropTypes.number.isRequired
 };
 
 export default SubMenu;

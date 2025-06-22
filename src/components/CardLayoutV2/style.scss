@@ -1,0 +1,132 @@
+.cadr-header-component {
+  max-width: calc(100% - (1rem + 115px));
+}
+
+.info-back,
+.item-parametro {
+  label,
+  p {
+    font-size: 1rem;
+  }
+  label {
+    font-weight: 500;
+    color: #6b7280;
+  }
+  p {
+    color: var(--cor-preto-1);
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+.info-back {
+  label {
+    color: rgb(255, 255, 255);
+  }
+  p {
+    color: rgb(251, 191, 36);
+  }
+}
+
+// Estilo para o container do flip
+.card-flip-container {
+  perspective: 1000px;
+  position: relative;
+
+  .card-flip-inner {
+    position: relative;
+    width: 100%;
+    min-height: inherit;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+
+  &.flipped .card-flip-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-flip-front,
+  .card-flip-back {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    border-radius: 0.75rem;
+
+    .header-card {
+      .btn-card {
+        width: 28px;
+        height: 28px;
+      }
+      .papel {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        text-align: left;
+      }
+      .titulo {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 4px;
+        text-align: left;
+      }
+      .subtitulo {
+        font-size: 12px;
+        color: #6b7280;
+        text-align: left;
+      }
+    }
+  }
+
+  .card-flip-front {
+    background-color: var(--cor-4); /* Frente (branco) */
+    color: var(--cor-2);
+  }
+
+  .card-flip-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: var(--cor-escuro);
+
+    .header-card {
+      .papel,
+      .titulo,
+      .subtitulo {
+        color: var(--cor-4);
+      }
+
+      .logo-avatar {
+        color: var(--cor-principal);
+        background-color: var(--cor-claro) !important;
+      }
+    }
+
+    .btn-azul {
+      background: #4d79e6;
+    }
+
+    .btn-card .p-button-icon {
+      color: var(--cor-4);
+      --icon-cor: var(--cor-4) !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .card-flip-container {
+    max-width: 340px;
+    margin: auto;
+  }
+}

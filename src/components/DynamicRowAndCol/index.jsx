@@ -105,7 +105,7 @@ const Col = ({
   return (
     <article className={GetSize()}>
       <div className={`${isCard ? "card p-3 " : ""}h-100`}>
-        {(descricao || isEditar) && (
+        {(descricao || isEditar || title) && (
           <div className="w-100 d-flex justify-content-between align-items-center mb-3">
             {descricao ? (
               <>
@@ -127,7 +127,7 @@ const Col = ({
             ) : (
               <div />
             )}
-            {title && <h3 className="m-0">{title}</h3>}
+            {title && <h3 className="m-0 text-center w-100">{title}</h3>}
             {isEditar && (
               <>
                 <Button

@@ -4,20 +4,41 @@
 }
 
 .layout-sidebar {
-  --size-sidebar: 240px;
+  --size-sidebar: 265px;
   width: var(--size-sidebar);
   min-width: var(--size-sidebar);
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative;
-  background-color: #ffffff;
+  position: fixed;
+  background-color: var(--cor-componete-fixo);
   transition: 0.5s;
   overflow: hidden;
+  box-shadow:
+    0 1px 15px rgba(0, 0, 0, 0.04),
+    0 1px 6px rgba(0, 0, 0, 0.04);
+  z-index: 999;
+
+  &:before {
+    content: "";
+    z-index: 99;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 100px;
+    height: 100px;
+    background-color: #293056;
+  }
 
   &.not-show {
     width: 75px;
     min-width: 75px;
+
+    .layout-menu {
+      padding-left: 18px;
+      width: 75px;
+    }
 
     .p-button {
       .p-button-label {
@@ -53,6 +74,15 @@
   transition: all 0.3s;
 }
 
+.layout-cor {
+  --logo-cor: #293056;
+}
+
+.layout-logo,
+.layout-logo-tech {
+  color: var(--logo-cor);
+}
+
 .layout-logo {
   position: absolute;
   width: 105px;
@@ -67,16 +97,18 @@
 }
 
 .layout-box-logo {
-  height: 70px;
+  --bd-cor-app: #d5d7da;
+  min-height: calc(var(--height-header) + 0px);
   text-align: center;
   transition: all 0.5s;
   position: relative;
   overflow: hidden;
-  background-color: #35353c;
+  background-color: var(--cor-componete-fixo);
   background-position: left;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  border-bottom: solid 1px var(--bd-cor-app);
 
   &.layout-logo-min,
   &.layout-logo-max {
@@ -93,7 +125,7 @@
 
   &.layout-logo-max {
     .layout-logo {
-      top: 0px;
+      top: 27%;
       left: 40%;
       transform: translate(-60%, 0%);
     }
@@ -113,10 +145,10 @@
     background-position: center;
 
     .layout-logo {
-      width: 77px;
-      top: 10%;
-      left: 0px;
-      transform: translate(0%, -10%);
+      width: 55px;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -20%);
     }
 
     .layout-logo-tech {
@@ -141,10 +173,6 @@
   }
 }
 
-.layout-sidebar.not-show .layout-menu {
-  padding-left: 18px;
-}
-
 .layout-menu {
   --cor-text-menu: #101010;
   padding: 0 10px;
@@ -157,6 +185,7 @@
 
   &.sticky {
     position: fixed;
+    width: 75px;
   }
 
   .p-panelmenu-panel {

@@ -1,14 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import { Button } from "primereact/button";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 
-import { BoxCards, Card } from "components/CardLayout";
-import ConfirmDialog from "components/ConfirmDialog";
-import LogoAvatar from "components/LogoAvatar";
-import ModalLateral from "components/ModalLateral";
+import { BoxCards, BtnsLayout } from "components/CardLayoutV2";
 
 import { useAuth } from "context/AuthContext";
 import { useLoading } from "context/LoadingContext";
@@ -16,12 +13,10 @@ import { useNotification } from "context/NotificationContext";
 
 import Api from "utils/Api";
 import MaskUtil from "utils/MaskUtil";
-import useQuery from "utils/useQuery";
 
 const ListaMovimentacao = () => {
   // Contextos e utilitários
   const Auth = useAuth();
-  const Query = useQuery();
   const Notify = useNotification();
   const Requisicao = new Api(Auth.logout, Notify);
   const { setLoading } = useLoading();
@@ -97,15 +92,45 @@ const ListaMovimentacao = () => {
     Init();
   }, []);
 
+  const GetCardProps = (item) =>
+    item
+      ? {
+          papel: "movimentoção",
+          titulo: item.nomeMovimentacao.nome,
+          subtitulo: item.nomeMovimentacao?.categoria?.nome || "N/D",
+          infoFrente: [
+            {
+              label: "Valor",
+              valor: MaskUtil.applyMonetaryMask(item.valor)
+            },
+            { label: "Data", valor: MaskUtil.applyDataMask(item.data) },
+            {
+              label: "Tipo",
+              valor: item.tipoMovimentacao.nome
+            },
+            {
+              label: "Categoria",
+              valor: item.nomeMovimentacao?.categoria?.nome
+            }
+          ],
+          onExcluir: () => {
+            setShowExcluir(true);
+            setIdMovimentacao(item.Movimentacao_id);
+          },
+          onEditar: () => {
+            CarregarMovimentacao(item.Movimentacao_id);
+            setIdMovimentacao(item.Movimentacao_id);
+          }
+        }
+      : {};
+
   // Filtragem e ordenação
-  const GetListaFiltrada = () => {
-    let listaFiltrada = [...Lista];
+  const listaFiltrada = useMemo(() => {
+    let newListaFiltrada = [...Lista];
 
-    if (listaFiltrada.length === 0) return [];
-
-    // Aplicar filtro de busca
+    if (newListaFiltrada.length === 0) return [];
     if (Buscar !== "") {
-      listaFiltrada = listaFiltrada.filter(
+      newListaFiltrada = newListaFiltrada.filter(
         (item) =>
           item.nomeMovimentacao.nome
             .toLowerCase()
@@ -115,16 +140,12 @@ const ListaMovimentacao = () => {
       );
     }
 
-    // Aplicar ordenação
-    listaFiltrada.sort((a, b) => {
-      const comparacao = a.nomeMovimentacao.nome.localeCompare(
-        b.nomeMovimentacao.nome
-      );
+    newListaFiltrada.sort((a, b) => {
+      const comparacao = a.nome?.localeCompare(b.nome);
       return OrdemCrescente ? comparacao : -comparacao;
     });
-
-    return listaFiltrada;
-  };
+    return newListaFiltrada;
+  }, [Lista, Buscar, OrdemCrescente]);
 
   return (
     <section>
@@ -133,7 +154,7 @@ const ListaMovimentacao = () => {
           <div className="d-flex flex-row flex-wrap gap-2">
             <Button
               label="Nova Movimentacao"
-              className="btn btn-quadro active"
+              className="btn btn-azul"
               icon="ak ak-plus-circle"
               iconPos="right"
               onClick={() => {
@@ -151,70 +172,28 @@ const ListaMovimentacao = () => {
               />
             </IconField>
             <Button
-              className="btn-quadro active"
+              className="btn-azul"
               icon={`pi ${
                 OrdemCrescente ? "pi-sort-alpha-down" : "pi-sort-alpha-up-alt"
               }`}
               onClick={() => setOrdemCrescente((e) => !e)}
             />
           </div>
-          <div className="d-flex flex-row flex-wrap gap-2">
-            <Button
-              className={`btn-quadro ${!LayoutLista ? "active" : ""}`}
-              label="Card"
-              icon="ak ak-grid-four-fill"
-              onClick={() => setLayoutLista(false)}
-            />
-            <Button
-              className={`btn-quadro ${LayoutLista ? "active" : ""}`}
-              label="Lista"
-              icon="ak ak-rows-fill"
-              onClick={() => setLayoutLista(true)}
-            />
-          </div>
+          <BtnsLayout
+            setLayoutLista={setLayoutLista}
+            LayoutLista={LayoutLista}
+          />
         </div>
         <hr />
       </header>
 
-      <article className="card not-shadow p-3 mb-3 bg-cor-cinza-3">
-        <BoxCards itens={GetListaFiltrada().length}>
-          {GetListaFiltrada().map((item) => (
-            <Card
-              key={item.Movimentacao_id}
-              LayoutLista={LayoutLista}
-              HeaderComponent={
-                <p className="m-0 fs-5 truncate-text">
-                  <b>{item.nomeMovimentacao.nome}</b>
-                </p>
-              }
-              parametros={[
-                {
-                  label: "Valor",
-                  valor: MaskUtil.applyMonetaryMask(item.valor)
-                },
-                { label: "Data", valor: MaskUtil.applyDataMask(item.data) },
-                {
-                  label: "Tipo",
-                  valor: item.tipoMovimentacao.nome
-                },
-                {
-                  label: "categoria",
-                  valor: item.nomeMovimentacao?.categoria?.nome
-                }
-              ]}
-              detalhesWidth={15}
-              btnsCardWidth={10}
-              onExcluir={() => {
-                setShowExcluir(true);
-                setIdMovimentacao(item.Movimentacao_id);
-              }}
-              onEditar={() => {
-                CarregarMovimentacao(item.Movimentacao_id);
-                setIdMovimentacao(item.Movimentacao_id);
-              }}
-            />
-          ))}
-        </BoxCards>
+      <article className="mb-3">
+        <BoxCards
+          itens={listaFiltrada}
+          getEntityId={(entity) => entity.advogado_id}
+          renderItem={GetCardProps}
+          layoutLista={LayoutLista}
+        />
       </article>
 
       {/* <ModalLateral

@@ -1,5 +1,5 @@
 :root {
-  --padding-padao: 4.8px 9.6px;
+  --padding-padao: 7.8px 9.6px;
 }
 
 .p-component {
@@ -32,6 +32,20 @@
     &.p-disabled {
       background-color: var(--cor-cinza-2);
     }
+  }
+}
+
+.p-inputtext,
+.p-dropdown {
+  &.tipo-3 {
+    background-color: var(--cor-light-bg);
+    color: var(--cor-dark);
+    border: none;
+  }
+  &.tipo-4 {
+    background-color: var(--cor-componete-fixo);
+    color: var(--cor-dark);
+    border-color: var(--cor-border);
   }
 }
 
@@ -177,7 +191,7 @@
   }
 
   .p-dropdown-label {
-    padding: 5.5px 9.6px;
+    padding: 7.5px 9.6px;
     border: 0 none;
   }
 }
@@ -484,5 +498,41 @@
     .p-autocomplete-input {
       border: none;
     }
+  }
+}
+
+.p-avatar.p-avatar-lg {
+  min-width: 3rem;
+  min-height: 3rem;
+}
+
+.p-button-group .p-button:first-of-type {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.p-button-group .p-button:last-of-type {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.p-checkbox.p-disabled {
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
+  background: transparent;
+
+  .p-checkbox-box {
+    background-color: #d1d1d1;
+    border-color: #d1d1d1;
+  }
+}
+
+.p-radiobutton.p-disabled {
+  background-color: transparent;
+
+  .p-radiobutton-box {
+    background-color: #d1d1d1;
+    border-color: #d1d1d1;
   }
 }

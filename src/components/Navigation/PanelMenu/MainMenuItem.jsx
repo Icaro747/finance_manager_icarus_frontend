@@ -27,7 +27,7 @@ const MainMenuItem = ({
       }}
     >
       <div className="icon-box">
-        <i className={`${item.icon} ak-cor-2`} />
+        <i className={item.icon} />
       </div>
       <p className={classNames({ "not-show": !expandirMenu })}>{item.label}</p>
     </Link>
@@ -52,7 +52,7 @@ const MainMenuItem = ({
       }}
     >
       <div className="icon-box">
-        <i className={`${item.icon} ak-cor-2`} />
+        <i className={item.icon} />
       </div>
       <p className={classNames({ "not-show": !expandirMenu })}>{item.label}</p>
     </button>

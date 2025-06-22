@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 export const Box = styled.div`
+  --bg-cor-layout:#F8FAFC;
   width: calc(100% - 70px);
   position: relative;
-  background-color: #F8FAFC;
+  background-color: var(--bg-cor-layout);
   transition: 0.5s;
   display: flex;
   flex-direction: column;
@@ -11,6 +12,7 @@ export const Box = styled.div`
   background-attachment: fixed;
   background-position: left;
   background-size: cover;
+  margin-left: 75px;
 
   ${({ $isHome }) => $isHome && `
     background-image: var(--img-00);

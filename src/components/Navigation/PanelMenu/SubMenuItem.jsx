@@ -5,9 +5,10 @@ import classNames from "classnames";
 import PropTypes from "prop-types";
 
 const SubMenuItem = ({ item }) => {
+  const submenuRef = useRef(null);
+
   const [ShowThisList, setShowThisList] = useState(null);
   const [SubmenuHeight, setSubmenuHeight] = useState(0);
-  const submenuRef = useRef(null);
 
   useEffect(() => {
     if (ShowThisList === item.id && submenuRef.current) {
@@ -18,9 +19,9 @@ const SubMenuItem = ({ item }) => {
   return item?.to ? (
     <Link to={item.to} className={classNames("item-submenu")}>
       <div className="icon-box">
-        <i className={`${item.icon} ak-cor-2`} />
+        <i className={item.icon} />
       </div>
-      <p>{item.label}</p>
+      <p className="cor-text">{item.label}</p>
     </Link>
   ) : (
     <div className="main-top-submenu">
@@ -38,13 +39,13 @@ const SubMenuItem = ({ item }) => {
           } else setShowThisList(null);
         }}
       >
-        <div className="d-flex flex-row align-items-center gap-3">
+        <div className="d-flex flex-row align-items-center gap-3 truncate-text">
           <div className="icon-box">
-            <i className={`${item.icon} ak-cor-2`} />
+            <i className={item.icon} />
           </div>
-          <p>{item.label}</p>
+          <p className="cor-text ">{item.label}</p>
         </div>
-        <i className="bi bi-chevron-down" />
+        <i className="bi bi-chevron-down cor-text" />
       </button>
       <div
         className="box-sub-submenu"
@@ -54,14 +55,11 @@ const SubMenuItem = ({ item }) => {
       >
         <div ref={submenuRef} className="list-sub-submenu">
           <div className="list-linha" />
-          <ul className="">
+          <ul>
             {item.items.map((subItem) => (
               <li key={subItem.id}>
                 <Link to={subItem.to} className={classNames("item-submenu")}>
-                  <div className="icon-box">
-                    <i className={`${subItem.icon} ak-cor-2`} />
-                  </div>
-                  <p>{subItem.label}</p>
+                  <p className="cor-text">{subItem.label}</p>
                 </Link>
               </li>
             ))}

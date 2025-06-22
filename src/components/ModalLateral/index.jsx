@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 import { Button } from "primereact/button";
 import { Sidebar } from "primereact/sidebar";
 
+import "./style.scss";
+
 const ModalLateral = ({
   visible,
   onHide,
@@ -33,9 +35,14 @@ const ModalLateral = ({
           />
         </div>
         <hr />
-        <section className="h-100 d-flex flex-column justify-content-between gap-3">
+        <section className="conteudo-modal-lateral">
           <article>{body}</article>
-          <div className="modal-footer">{footer}</div>
+          {footer && (
+            <div>
+              <hr />
+              <div className="modal-footer">{footer}</div>
+            </div>
+          )}
         </section>
       </div>
     )}

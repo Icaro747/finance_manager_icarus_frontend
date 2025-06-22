@@ -12,29 +12,23 @@ import MainBox from "./modules/MainBox";
 const Layout = ({ children }) => (
   <LayoutProvider>
     <NotificationProvider>
-      <div className="layout-content-border-2">
-        <div className="layout-content-border">
-          <div className="layout-content">
-            <div className="main-container">
-              <NavigationProvider>
-                <Navigation />
-              </NavigationProvider>
-              <MainBox>
-                <>
-                  <Header />
-                  <main className="content">
-                    <LoadingProvider>{children}</LoadingProvider>
-                  </main>
-                  <footer>
-                    <p style={{ color: "#6c757d" }}>
-                      Icarus {new Date().getFullYear()}
-                    </p>
-                  </footer>
-                </>
-              </MainBox>
-            </div>
-          </div>
-        </div>
+      <div className="main-container">
+        <NavigationProvider>
+          <Navigation />
+        </NavigationProvider>
+        <LoadingProvider>
+          <MainBox>
+            <>
+              <Header />
+              <main className="content">{children}</main>
+              <footer className="site-footer">
+                <p style={{ color: "#6c757d" }}>
+                  Icarus {new Date().getFullYear()}
+                </p>
+              </footer>
+            </>
+          </MainBox>
+        </LoadingProvider>
       </div>
     </NotificationProvider>
   </LayoutProvider>

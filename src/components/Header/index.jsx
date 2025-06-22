@@ -1,5 +1,11 @@
+/* eslint-disable react/no-danger */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+
 import { useRef, useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+
+import classNames from "classnames";
 
 import { Button } from "primereact/button";
 import { OverlayPanel } from "primereact/overlaypanel";
@@ -20,7 +26,13 @@ const Header = () => {
   const auth = useAuth();
   const op = useRef(null);
   const navigate = useNavigate();
-  const layout = useLayout();
+  const {
+    setFixedShowMenu,
+    isDarkTheme,
+    toggleTheme,
+    setStatuShowDialogHelp,
+    StatuShowMenu
+  } = useLayout();
 
   const NomePaginaAtual =
     NamesPeges.filter((x) => x.url.includes(location.pathname))[0]?.name ??
@@ -35,11 +47,15 @@ const Header = () => {
   }, [auth]);
 
   return (
-    <header className="header-container">
-      <div className="header-box">
+    <header
+      className={classNames("header-container", {
+        "margem-header": StatuShowMenu
+      })}
+    >
+      <div className="header-box layout-cor">
         <div className="box-btn-header">
           <Button
-            onClick={() => layout.setStatuShowMenu((show) => !show)}
+            onClick={() => setFixedShowMenu((show) => !show)}
             icon="pi pi-bars"
             className="btn-header-menu"
           />
@@ -52,16 +68,24 @@ const Header = () => {
             onClick={(e) => op.current.toggle(e)}
           >
             <div className="box-text-user">
-              <span>Meu Perfil</span>
-              <p>{Nome}</p>
+              <span className="text-cor-secondary">Meu Perfil</span>
+              <p className="text-cor-secondary">{Nome}</p>
             </div>
-            <LogoAvatar name={Nome} usuarioId={auth.GetImagemPerfil()} />
+            <LogoAvatar
+              name={Nome}
+              usuarioId={auth.GetImagemPerfil()}
+              invertColor
+            />
           </button>
           <OverlayPanel ref={op}>
             <div className="d-flex flex-column">
               <div className="item-user-menu border-bottom">
                 <div className="d-flex align-items-center gap-3 mb-2">
-                  <LogoAvatar name={Nome} usuarioId={auth.GetImagemPerfil()} />
+                  <LogoAvatar
+                    name={Nome}
+                    usuarioId={auth.GetImagemPerfil()}
+                    invertColor
+                  />
                   <p className="m-0">{Nome}</p>
                 </div>
                 <Button
@@ -72,6 +96,16 @@ const Header = () => {
                     auth.logout();
                     navigate("/");
                   }}
+                />
+                <Button
+                  className="btn btn-user btn-sm"
+                  label={isDarkTheme ? "Tema Claro" : "Tema Escuro"}
+                  icon={classNames(
+                    "pi",
+                    { "pi-moon": !isDarkTheme },
+                    { "pi-sun": isDarkTheme }
+                  )}
+                  onClick={toggleTheme}
                 />
               </div>
               {LinksMenuUsuario.map((grupo) => (
@@ -96,7 +130,7 @@ const Header = () => {
                   icon="pi pi-question-circle"
                   className="btn btn-user btn-sm"
                   onClick={() => {
-                    layout.setStatuShowDialogHelp(true);
+                    setStatuShowDialogHelp(true);
                     op.current.hide();
                   }}
                 />
